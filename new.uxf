@@ -177,4 +177,18 @@ Responsibilities
     <panel_attributes>*Use case 3*</panel_attributes>
     <additional_attributes/>
   </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>14</x>
+      <y>14</y>
+      <w>84</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=.
+Collaboration
+fg=red
+bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
 </diagram>
