@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.1.1">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>343</x>
+      <y>21</y>
+      <w>112</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>Game
+--
+-id: Long
+_-ClassAttribute: Long_
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>112</x>
+      <y>224</y>
+      <w>147</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Castle
+--
+-square: Square
+-price: int
+-power: int
+-viewRange: int
+-attackSpeed: int
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>329</x>
+      <y>224</y>
+      <w>147</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>Enemy
+--
+-health: int
+-square: Square
+-prize: int
+-power: int
+-attackSpeed: int
+-speed: int
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>525</x>
+      <y>224</y>
+      <w>147</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>Map
+--
+-Square[][]: Long
+_-ClassAttribute: Long_
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>644</x>
+      <y>406</y>
+      <w>147</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>Square
+--
+-xCoordinate: int
+-yCoordinate: int
+-
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>112</x>
+      <y>413</y>
+      <w>147</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>Castle1
+--
+-id: Long
+_-ClassAttribute: Long_
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>168</x>
+      <y>357</y>
+      <w>28</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;20.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>700</x>
+      <y>105</y>
+      <w>147</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>User
+--
+-balance: int
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>994</x>
+      <y>308</y>
+      <w>84</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>*Use case 3*</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
