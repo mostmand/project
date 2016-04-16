@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>343</x>
-      <y>21</y>
+      <x>371</x>
+      <y>42</y>
       <w>112</w>
       <h>105</h>
     </coordinates>
@@ -25,12 +25,12 @@ Responsibilities
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>112</x>
-      <y>224</y>
+      <x>140</x>
+      <y>245</y>
       <w>147</w>
       <h>140</h>
     </coordinates>
-    <panel_attributes>Castle
+    <panel_attributes>Castle(Rasoul)
 --
 -square: Square
 -price: int
@@ -49,12 +49,12 @@ Responsibilities
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>329</x>
-      <y>224</y>
+      <x>357</x>
+      <y>245</y>
       <w>147</w>
       <h>133</h>
     </coordinates>
-    <panel_attributes>Enemy
+    <panel_attributes>Enemy(Ghasem)
 --
 -health: int
 -square: Square
@@ -74,12 +74,12 @@ Responsibilities
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>525</x>
-      <y>224</y>
+      <x>553</x>
+      <y>245</y>
       <w>147</w>
       <h>133</h>
     </coordinates>
-    <panel_attributes>Map
+    <panel_attributes>Map(Square)
 --
 -Square[][]: Long
 _-ClassAttribute: Long_
@@ -95,12 +95,12 @@ Responsibilities
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>644</x>
-      <y>406</y>
+      <x>672</x>
+      <y>427</y>
       <w>147</w>
       <h>133</h>
     </coordinates>
-    <panel_attributes>Square
+    <panel_attributes>Square(Hossein)
 --
 -xCoordinate: int
 -yCoordinate: int
@@ -117,8 +117,8 @@ Responsibilities
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>112</x>
-      <y>413</y>
+      <x>140</x>
+      <y>434</y>
       <w>147</w>
       <h>133</h>
     </coordinates>
@@ -138,8 +138,8 @@ Responsibilities
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>168</x>
-      <y>357</y>
+      <x>196</x>
+      <y>378</y>
       <w>28</w>
       <h>70</h>
     </coordinates>
@@ -149,8 +149,8 @@ Responsibilities
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>700</x>
-      <y>105</y>
+      <x>728</x>
+      <y>126</y>
       <w>147</w>
       <h>133</h>
     </coordinates>
@@ -169,8 +169,8 @@ Responsibilities
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>994</x>
-      <y>308</y>
+      <x>1022</x>
+      <y>329</y>
       <w>84</w>
       <h>28</h>
     </coordinates>
@@ -180,8 +180,8 @@ Responsibilities
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>14</x>
-      <y>14</y>
+      <x>42</x>
+      <y>35</y>
       <w>84</w>
       <h>28</h>
     </coordinates>
@@ -189,6 +189,30 @@ Responsibilities
 Collaboration
 fg=red
 bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>42</x>
+      <y>35</y>
+      <w>98</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>EmptyPackage
+--
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>42</x>
+      <y>35</y>
+      <w>84</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>Use case 1</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
