@@ -3,5 +3,6 @@
  */
 public abstract class Map {
     Square[] squares;
+    Square[] entrance;
     int length;
 }
