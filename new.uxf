@@ -38,6 +38,8 @@ Responsibilities
 -viewRange: int
 -attackSpeed: int
 --
+-attack()
+-monitorSurroundings()
 #Operation(i: int): int
 /+AbstractOperation()/
 --
@@ -63,6 +65,8 @@ Responsibilities
 -attackSpeed: int
 -speed: int
 --
+-attack()
+-monitorSurroundings()
 #Operation(i: int): int
 /+AbstractOperation()/
 --
