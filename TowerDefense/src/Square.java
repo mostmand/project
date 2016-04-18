@@ -5,7 +5,7 @@ public abstract class Square {
     private Integer xCoordination;
     private Integer yCoortdination;
 
-    
+
 
     public abstract void abstractOperation();
 }
