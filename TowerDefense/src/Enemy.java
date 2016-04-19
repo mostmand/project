@@ -6,5 +6,4 @@ public abstract class Enemy extends BattleForce{
     private int power;
     private int attackspeed;
     private int speed;
-    public abstract void monitorSurroundings();
 }

@@ -3,4 +3,5 @@
  */
 public abstract class BattleForce{
     private Integer health;
+    private Square position;
 }

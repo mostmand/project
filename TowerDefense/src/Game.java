@@ -3,11 +3,21 @@ import java.util.Timer;
 /**
  * Created by akhavan on 2016-04-18.
  */
-public abstract class Game{
+public class Game{
     private User player;
     private Map gamemap;
-    public abstract void setCastles();
-    public abstract void startGame();
-    public abstract void refreshScreen();
+    public void setCastles(){
+        //Get info from user
+        //Make castles
+        //Set them on the map
+    }
+    public void startGame(){
+        //start the castle threads
+        //Make enemies.
+        //Start their threads
+    }
+    public void refreshScreen(){
+
+    }
 
 }
