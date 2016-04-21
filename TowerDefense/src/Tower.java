@@ -37,14 +37,26 @@ public abstract class Tower extends Military{
 //        public abstract void monitorSurroundings();
 //    public abstract void attack();
 //    Sector[] surroundings;
-//    public void monitorSurroundings(){
-//        for (Sector sector: surroundings) {
-//            if (sector.isOccupied() && sector.isOccupiedByEnemy()) {
-//                this.attack(sector);
-//            }
-//        }
-//    }
-//    public void attack(Sector sector){
+    @Override
+    public void monitorSurroundings(){
+        for (int radius = 1; radius <= viewRange; radius++){
+            for (int xdif = -radius; xdif < radius; xdif++){
+                int ydif = radius - Math.abs(xdif);
+                if (0 < this.getSector().xCoordinate + xdif && this.getSector().xCoordinate + xdif < getGameMap().length && 0 < this.getSector().yCoordinate + ydif && this.getSector().yCoordinate + ydif < getGameMap().length ){
+                    if (getGameMap().sectors[this.getSector().xCoordinate + xdif][this.getSector().yCoordinate + ydif].isOccupiedByEnemy()){
+                        attack();
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void attack() {
+
+    }
+
+    //    public void attack(Sector sector){
 //        Enemy prey;
 //        for (int i = 0; i < sector.occupant.size(); i++) {
 //            prey = (Enemy)sector.occupant.get(i);
@@ -53,6 +65,12 @@ public abstract class Tower extends Military{
 }
 
 class Tower1 extends Tower{
+
+    Tower1(Map gameMap, Map.Sector sector) {
+        this.setGameMap(gameMap);
+        this.setSector(sector);
+    }
+
     static Integer price = 11;
     static Integer initialhealth = 1000;
 

@@ -23,7 +23,26 @@ public abstract class Military{
     }
 
 
+    private Map gameMap;
+
+    public Map getGameMap() {
+        return gameMap;
+    }
+    public void setGameMap(Map gameMap) {
+        this.gameMap = gameMap;
+    }
+
     private Map.Sector position;
 
+    public Map.Sector getSector() {
+        return position;
+    }
+    public void setSector(Map.Sector sector) {
+        this.position = sector;
+    }
+
+    public abstract void monitorSurroundings();
+
+    public abstract void attack();
 
 }

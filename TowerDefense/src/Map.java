@@ -14,19 +14,25 @@ public class Map {
         }
     }
 
-    private Sector[][] sectors;
-    private Integer length;
+    Sector[][] sectors;
+    Integer length;
+
+
 
     class Sector {
 
-        public Sector(Integer xCoordination, Integer yCoortdination) {
-            this.xCoordination = xCoordination;
-            this.yCoortdination = yCoortdination;
+        public Sector(Integer xCoordinate, Integer yCoordinate) {
+            this.xCoordinate = xCoordinate;
+            this.yCoordinate = yCoordinate;
         }
 
-        private Integer xCoordination;
-        private Integer yCoortdination;
+        Integer xCoordinate;
+        Integer yCoordinate;
         ArrayList<Military> occupant;
+
+        public Sector position(){
+            return this;
+        }
 
         public boolean isOccupied(){
             return !occupant.isEmpty();
