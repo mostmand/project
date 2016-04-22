@@ -3,6 +3,9 @@
  */
 public abstract class Military{
 
+    MilitaryThread myThread = new MilitaryThread(this);
+
+
     private Integer health;
 
     public Integer getHealth() {
@@ -34,15 +37,39 @@ public abstract class Military{
 
     private Map.Sector position;
 
-    public Map.Sector getSector() {
+    public Map.Sector getPosition() {
         return position;
     }
-    public void setSector(Map.Sector sector) {
+    public void setPosition(Map.Sector sector) {
         this.position = sector;
+    }
+
+    public Map.Sector neighboringSector(int xdif, int ydif){
+        int newX = this.getPosition().xCoordinate + xdif;
+        int newY = this.getPosition().yCoordinate + ydif;
+        if (0 < newX && newX <= getGameMap().length && 0 < newY && newY <= getGameMap().length){
+            return getGameMap().sectors[newX][newY];
+        }
+        return null;
     }
 
     public abstract void monitorSurroundings();
 
-    public abstract void attack();
+    public abstract void attack(Map.Sector wheretoattack);
 
+}
+
+
+class MilitaryThread extends Thread{
+
+    MilitaryThread(Military militia) {
+        this.militia = militia;
+    }
+
+    Military militia;
+
+    @Override
+    public void run() {
+        militia.monitorSurroundings();
+    }
 }

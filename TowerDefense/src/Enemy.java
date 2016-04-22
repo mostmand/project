@@ -27,15 +27,20 @@ public abstract class Enemy extends Military{
 
     @Override
     public void monitorSurroundings(){
-        if(this.getGameMap().sectors[this.getSector().xCoordinate][this.getSector().yCoordinate].isOccupiedByTower()){
-            attack();
+        if(this.getGameMap().sectors[this.getPosition().xCoordinate][this.getPosition().yCoordinate].isOccupiedByTower()){
+//            attack();
         }
     }
 
     @Override
-    public void attack() {
+    public void attack(Map.Sector wheretoattack) {
 
     }
+
+//    @Override
+//    public void attack() {
+//
+//    }
 
 }
 
@@ -49,7 +54,7 @@ class Enemy1 extends Enemy{
 
     Enemy1(Map gameMap, Map.Sector sector) {
         this.setGameMap(gameMap);
-        this.setSector(sector);
+        this.setPosition(sector);
     }
 
     Enemy1(){
