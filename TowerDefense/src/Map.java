@@ -53,7 +53,7 @@ public class Map {
         }
 
         boolean inPath;
-        Sector nextsector;
+        Sector nextSector = null;
 
 //        public Sector nextSector(){
 //
@@ -74,16 +74,17 @@ public class Map {
             if (path[i][0].hashCode() == path[i+1][0].hashCode()){
                 for (int j = path[i][1]; j != path[i+1][1]; j += Math.signum(path[i+1][1]-path[i][1])){
                     this.sectors[path[i][0]][j].inPath = true;
-                    this.sectors[path[i][0]][j].nextsector = this.sectors[path[i+1][0]][j];
+                    this.sectors[path[i][0]][j].nextSector = this.sectors[path[i+1][0]][j];
                 }
             }
             else if (path[i][1].hashCode() == path[i+1][1].hashCode()){
                 for (int j = path[i][0]; j != path[i+1][0]; j += Math.signum(path[i+1][0]-path[i][0])){
                     this.sectors[j][path[i][0]].inPath = true;
-                    this.sectors[j][path[i][0]].nextsector = this.sectors[path[i+1][0]][j];
+                    this.sectors[j][path[i][0]].nextSector = this.sectors[path[i+1][0]][j];
                 }
             }
         }
+
     }
 
 }

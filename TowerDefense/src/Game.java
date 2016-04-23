@@ -1,4 +1,5 @@
 import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by akhavan on 2016-04-18.
@@ -6,16 +7,95 @@ import java.util.Timer;
 public class Game{
     private User player;
     private Map gamemap;
+    Timer globalTime;
+    int counter = 0;
     public void setCastles(){
         //Get info from user
         //Make castles
         //Set them on the map
     }
+
     public void startGame(){
-        //start the castle threads
-        //Make enemies.
-        //Start their threads
+        globalTime = new Timer();
+        globalTime.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                while(true){
+                    for (int i = 0; i < gamemap.length; i++) {
+                        for (Map.Sector s : gamemap.sectors[i]) {
+                            if (s.isOccupiedByTower()){
+                                monitorSurroundingsOf(s);
+                            }
+                            else if (s.isOccupiedByEnemy()){
+//                                gamemap.moveWhateverIsIn(s)
+                            }
+                        }
+                    }
+                }
+            }
+        }, 0, 100);
+
+
     }
+
+    public void monitorSurroundingsOf(Map.Sector s){
+        Tower tower = (Tower) s.occupant.get(0);
+        int x = s.xCoordinate;
+        int y = s.yCoordinate;
+        Map.Sector ns;
+        for (int radius = 1; radius <= tower.getViewRange(); radius++){
+            for (int xdif = -radius; xdif <= radius; xdif++){
+                int ydif = radius - Math.abs(xdif);
+                ns = gamemap.sectors[x+xdif][y+ydif];
+                if (ns.isOccupiedByEnemy()){
+                    try{
+                        tower.hit(ns.occupant.get(0));
+                        if (((Enemy)ns.occupant.get(0)).getHealth() <= 0){
+                            player.balance += ((Enemy)ns.occupant.get(0)).getCost();
+                            ns.occupant.remove(0);
+                        }
+                    }catch(Exception e){
+
+                    }
+                }
+                ydif = -ydif;
+                ns = gamemap.sectors[x+xdif][y+ydif];
+                if (ns.isOccupiedByEnemy()){
+                    try{
+                        tower.hit(ns.occupant.get(0));
+                        if (((Enemy)ns.occupant.get(0)).getHealth() <= 0)
+                            ns.occupant.remove(0);
+                    }catch(Exception e){
+                        System.out.println();
+                    }
+                }
+
+            }
+        }
+
+    }
+
+
+
+    public void check(){
+        System.out.println("Here");
+    }
+
+    public TimerTask getTimerTask(){
+        return new TimerTask() {
+            @Override
+            public void run() {
+                check();
+            }
+        };
+    }
+
+    public static void main(String[] args) {
+        Game g = new Game();
+        g.startGame();
+    }
+
+
     public void refreshScreen(){
 
     }
