@@ -27,7 +27,7 @@ public class Game{
                                 monitorSurroundingsOf(s);
                             }
                             else if (s.isOccupiedByEnemy()){
-//                                gamemap.moveWhateverIsIn(s)
+//                                gamemap.moveWhateverIsIn(s);
                             }
                         }
                     }

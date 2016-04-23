@@ -87,4 +87,14 @@ public class Map {
 
     }
 
+    public void moveWhateverIsIn(Sector sector){
+        for(Military enemy: sector.occupant){
+            if(((Enemy)enemy).getCanMove()){
+                sector.nextSector.occupant.add(enemy);
+                sector.occupant.remove(enemy);
+                ((Enemy) enemy).startExhaustTime();
+            }
+        }
+    }
+
 }

@@ -1,4 +1,5 @@
 import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by akhavan on 2016-04-17.
@@ -9,6 +10,18 @@ public abstract class Enemy extends Military{
     private Integer cost;
     private Integer speed;
     private Integer health;
+    private Boolean canMove = true;
+
+    public void startExhaustTime(){
+        setCanMove(false);
+        reloadtime.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                setCanMove(true);
+                reloadtime.cancel();
+            }
+        },0, getSpeed());
+    }
 
     public void setHealth(Integer health) {
         this.health = health;
@@ -33,6 +46,13 @@ public abstract class Enemy extends Military{
         return speed;
     }
 
+    public void setCanMove(Boolean canMove) {
+        this.canMove = canMove;
+    }
+
+    public Boolean getCanMove() {
+        return canMove;
+    }
 }
 
 class Enemy1 extends Enemy{
