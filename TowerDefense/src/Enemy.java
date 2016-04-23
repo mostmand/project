@@ -6,8 +6,25 @@ import java.util.Timer;
 public abstract class Enemy extends Military{
     Timer reloadtime = new Timer();
 
+    private Integer cost;
     private Integer speed;
     private Integer health;
+
+    public void setHealth(Integer health) {
+        this.health = health;
+    }
+
+    public Integer getHealth() {
+        return health;
+    }
+
+    public void setCost(Integer cost) {
+        this.cost = cost;
+    }
+
+    public Integer getCost() {
+        return cost;
+    }
 
     public void setSpeed(Integer speed) {
         this.speed = speed;
@@ -25,7 +42,7 @@ class Enemy1 extends Enemy{
     static Integer initialHealth = 200;
 
     Enemy1(){
-        this.setPrice(cost);
+        this.setCost(cost);
         this.setSpeed(speed);
         this.setHealth(initialHealth);
     }
