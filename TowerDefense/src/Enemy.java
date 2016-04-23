@@ -5,8 +5,7 @@ import java.util.Timer;
  */
 public abstract class Enemy extends Military{
     Timer reloadtime = new Timer();
-
-    private Integer price;
+    
     private Integer speed;
     private Integer health;
 
