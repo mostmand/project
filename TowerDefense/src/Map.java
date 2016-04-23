@@ -17,8 +17,6 @@ public class Map {
     Sector[][] sectors;
     Integer length;
 
-
-
     class Sector {
 
         public Sector(Integer xCoordinate, Integer yCoordinate) {
@@ -53,5 +51,39 @@ public class Map {
             }
             return false;
         }
+
+        boolean inPath;
+        Sector nextsector;
+
+//        public Sector nextSector(){
+//
+//        }
     }
+
+    Integer[][] path = new Integer[10000][2];
+
+    public void addPath(){
+        int cnt = 0;
+        while(true){
+            path[cnt][0] = 1;
+            path[cnt][1] = 1;
+            cnt++;
+            break;
+        }
+        for (int i = 0; i < cnt-1; i++){
+            if (path[i][0].hashCode() == path[i+1][0].hashCode()){
+                for (int j = path[i][1]; j != path[i+1][1]; j += Math.signum(path[i+1][1]-path[i][1])){
+                    this.sectors[path[i][0]][j].inPath = true;
+                    this.sectors[path[i][0]][j].nextsector = this.sectors[path[i+1][0]][j];
+                }
+            }
+            else if (path[i][1].hashCode() == path[i+1][1].hashCode()){
+                for (int j = path[i][0]; j != path[i+1][0]; j += Math.signum(path[i+1][0]-path[i][0])){
+                    this.sectors[j][path[i][0]].inPath = true;
+                    this.sectors[j][path[i][0]].nextsector = this.sectors[path[i+1][0]][j];
+                }
+            }
+        }
+    }
+
 }

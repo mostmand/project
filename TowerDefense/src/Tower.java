@@ -37,14 +37,21 @@ public abstract class Tower extends Military{
 //        public abstract void monitorSurroundings();
 //    public abstract void attack();
 //    Sector[] surroundings;
+
     @Override
     public void monitorSurroundings(){
         for (int radius = 1; radius <= viewRange; radius++){
-            for (int xdif = -radius; xdif < radius; xdif++){
+            for (int xdif = -radius; xdif <= radius; xdif++){
                 int ydif = radius - Math.abs(xdif);
-                if (0 < this.getSector().xCoordinate + xdif && this.getSector().xCoordinate + xdif < getGameMap().length && 0 < this.getSector().yCoordinate + ydif && this.getSector().yCoordinate + ydif < getGameMap().length ){
-                    if (getGameMap().sectors[this.getSector().xCoordinate + xdif][this.getSector().yCoordinate + ydif].isOccupiedByEnemy()){
-                        attack();
+                if (this.neighboringSector(xdif, ydif) != null){
+                    if (this.neighboringSector(xdif, ydif).isOccupiedByEnemy()){
+                        attack(this.neighboringSector(xdif, ydif));
+                    }
+                }
+                ydif = -ydif;
+                if (this.neighboringSector(xdif, ydif) != null){
+                    if (this.neighboringSector(xdif, ydif).isOccupiedByEnemy()){
+                        attack(this.neighboringSector(xdif, ydif));
                     }
                 }
             }
@@ -52,23 +59,23 @@ public abstract class Tower extends Military{
     }
 
     @Override
-    public void attack() {
-
+    public void attack(Map.Sector wheretoattack){
+        Enemy prey = null;
+        for (Military candidate:wheretoattack.occupant) {
+            if (prey == null || prey.getHealth() > candidate.getHealth())
+                prey = (Enemy) candidate;
+        }
+        if (prey != null)
+            prey.setHealth(prey.getHealth()-this.getPower());
     }
 
-    //    public void attack(Sector sector){
-//        Enemy prey;
-//        for (int i = 0; i < sector.occupant.size(); i++) {
-//            prey = (Enemy)sector.occupant.get(i);
-//        }
-//    }
 }
 
 class Tower1 extends Tower{
 
     Tower1(Map gameMap, Map.Sector sector) {
         this.setGameMap(gameMap);
-        this.setSector(sector);
+        this.setPosition(sector);
     }
 
     static Integer price = 11;
