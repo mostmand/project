@@ -28,7 +28,9 @@ public class Game{
                             }
                             else if (s.isOccupiedByEnemy()){
                                 gameMap.moveWhateverIsIn(s);
-                                //the condition below is checked for reducing the health of the user's castle when an enemy reaches the castle door
+                                //the condition below is checked for reducing the health of the user's castle when an
+                                // enemy reaches the castle door
+                                //the end of the game condition must be set here as well
                                 if(s.nextSector.isCastleDoor && s.nextSector.isOccupiedByEnemy()){
                                     for(Military enemy: s.nextSector.occupant){
                                         player.castleHealth --;
