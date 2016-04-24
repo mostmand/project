@@ -28,10 +28,10 @@ public class Game{
                             }
                             else if (s.isOccupiedByEnemy()){
                                 gameMap.moveWhateverIsIn(s);
-                                //when an enemy reaches the castle door the health of the castle decreases one unit
-                                if(s.nextSector.isCastleDoor && s.nextSector.isOccupied()){
+                                //the condition below is checked for reducing the health of the user's castle when an enemy reaches the castle door
+                                if(s.nextSector.isCastleDoor && s.nextSector.isOccupiedByEnemy()){
                                     for(Military enemy: s.nextSector.occupant){
-                                        player.setHealth(player.getHealth() - 1);
+                                        player.castleHealth --;
                                         s.nextSector.occupant.remove(enemy);
                                     }
                                 }
