@@ -55,6 +55,7 @@ public class Game{
             @Override
             public void run() {
 //                game: while(true){
+                    showTheMap(gamemap);
                     System.out.println("inGame");
                     for (int i = 0; i < gamemap.length; i++) {
                         for (Map.Sector s : gamemap.sectors[i]) {
@@ -78,6 +79,44 @@ public class Game{
         }, 0, 1000);
 
 
+    }
+
+    private void showTheMap(Map gamemap) {
+        for(int i = 0; i < gamemap.length; i ++){
+            for(int j = 0; j < gamemap.length; j ++){
+                if(gamemap.sectors[i][j].isOccupiedByEnemy()){
+                    System.out.print("E ");
+                }
+                else if(gamemap.sectors[i][j].isOccupiedByTower()){
+                    System.out.print("T ");
+                }
+                else if(gamemap.sectors[i][j].inPath){
+                    Integer direction = 0;
+                    if(gamemap.sectors[i][j].nextSector.xCoordinate == gamemap.sectors[i][j].xCoordinate){
+                        direction = gamemap.sectors[i][j].nextSector.yCoordinate - gamemap.sectors[i][j].yCoordinate;
+                        if(direction > 0){
+                            System.out.print("l ");
+                        }
+                        else{
+                            System.out.print("r ");
+                        }
+                    }
+                    else{
+                        direction = gamemap.sectors[i][j].nextSector.xCoordinate - gamemap.sectors[i][j].xCoordinate;
+                        if(direction > 0){
+                            System.out.print("d ");
+                        }
+                        else{
+                            System.out.print("u ");
+                        }
+                    }
+                }
+                else{
+                    System.out.print(". ");
+                }
+            }
+            System.out.println();
+        }
     }
 
     public void monitorSurroundingsOf(Map.Sector s){
