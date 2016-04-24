@@ -57,7 +57,6 @@ public class Map {
         }
 
         boolean inPath;
-        Boolean isCastleDoor;//this must be set in the addPath method at a later time
         Sector nextSector = null;
 
 //        public Sector nextSector(){
