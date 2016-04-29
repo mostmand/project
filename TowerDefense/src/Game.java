@@ -47,6 +47,9 @@ public class Game{
                 gamemap.sectors[x-1][y-1].occupant.add(new Tower1());
             }
         }
+        for (int i = 0; i < 1; i++){
+            gamemap.sectors[i][5].occupant.add(new Enemy1());
+        }
     }
 
     public void startGame(){

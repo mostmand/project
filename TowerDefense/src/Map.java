@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by qasem on 4/18/16.
@@ -13,6 +14,7 @@ public class Map {
             }
         }
         this.castle = new Sector(null, null);
+        this.castle.nextSector = this.castle;
         this.addPath();
     }
 
@@ -88,15 +90,17 @@ public class Map {
 //        }
         for (int i = 0; i < cnt-1; i++){
             if (path[i][0].hashCode() == path[i+1][0].hashCode()){
-                for (int j = path[i][1]; j != path[i+1][1]; j += Math.signum(path[i+1][1]-path[i][1])){
+                int sgn = (int) Math.signum(path[i+1][1]-path[i][1]);
+                for (int j = path[i][1]; j != path[i+1][1]; j += sgn){
                     this.sectors[path[i][0]][j].inPath = true;
-                    this.sectors[path[i][0]][j].nextSector = this.sectors[path[i+1][0]][j];
+                    this.sectors[path[i][0]][j].nextSector = this.sectors[path[i+1][0]][j+sgn];
                 }
             }
             else if (path[i][1].hashCode() == path[i+1][1].hashCode()){
-                for (int j = path[i][0]; j != path[i+1][0]; j += Math.signum(path[i+1][0]-path[i][0])){
-                    this.sectors[j][path[i][0]].inPath = true;
-                    this.sectors[j][path[i][0]].nextSector = this.sectors[path[i+1][0]][j];
+                int sgn = (int)Math.signum(path[i+1][0]-path[i][0]);
+                for (int j = path[i][0]; j != path[i+1][0]; j += sgn){
+                    this.sectors[j][path[i][1]].inPath = true;
+                    this.sectors[j][path[i][1]].nextSector = this.sectors[j+sgn][path[i+1][1]];
                 }
             }
         }
@@ -104,13 +108,28 @@ public class Map {
     }
 
     public void moveWhateverIsIn(Sector sector){
-        for(Military enemy: sector.occupant){
-            if(((Enemy)enemy).getCanMove()){
+        Iterator<Military> iter = sector.occupant.iterator();
+        int cnt = 0;
+        while (iter.hasNext()){
+//            System.out.println(cnt);
+//            cnt++;
+            Military enemy = iter.next();
+            if (((Enemy)enemy).getCanMove()){
+                System.out.println(sector);
+                System.out.println(sector.nextSector);
+                System.out.println(sector.nextSector.occupant);
                 sector.nextSector.occupant.add(enemy);
-                sector.occupant.remove(enemy);
-                ((Enemy) enemy).startExhaustTime();
+                iter.remove();
+                ((Enemy)enemy).startExhaustTime();
             }
         }
+//        for(Military enemy: sector.occupant){
+//            if(((Enemy)enemy).getCanMove()){
+//                sector.nextSector.occupant.add(enemy);
+//                sector.occupant.remove(enemy);
+//                ((Enemy) enemy).startExhaustTime();
+//            }
+//        }
     }
 
 }

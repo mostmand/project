@@ -1,3 +1,4 @@
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,9 +19,9 @@ public abstract class Enemy extends Military{
             @Override
             public void run() {
                 setCanMove(true);
-                reloadtime.cancel();
+//                reloadtime.cancel();
             }
-        },0, getSpeed());
+        }, getSpeed());
     }
 
     public void setHealth(Integer health) {
