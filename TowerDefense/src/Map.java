@@ -115,9 +115,6 @@ public class Map {
 //            cnt++;
             Military enemy = iter.next();
             if (((Enemy)enemy).getCanMove()){
-                System.out.println(sector);
-                System.out.println(sector.nextSector);
-                System.out.println(sector.nextSector.occupant);
                 sector.nextSector.occupant.add(enemy);
                 iter.remove();
                 ((Enemy)enemy).startExhaustTime();
