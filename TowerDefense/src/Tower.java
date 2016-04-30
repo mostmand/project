@@ -5,12 +5,12 @@ import java.util.TimerTask;
  * Created by akhavan on 2016-04-16.
  */
 public abstract class Tower extends Military{
-    Timer reloadtime = new Timer();
+    Timer reloadTime = new Timer();
 
     private Integer price;
     private Integer viewRange;
     private Integer power;
-    private Integer attackspeed;
+    private Integer attackSpeed;
     private Boolean canShoot;
 
     public Integer getPrice() {
@@ -34,11 +34,11 @@ public abstract class Tower extends Military{
         this.power = power;
     }
 
-    public Integer getAttackspeed() {
-        return attackspeed;
+    public Integer getAttackSpeed() {
+        return attackSpeed;
     }
-    public void setAttackspeed(Integer attackspeed) {
-        this.attackspeed = attackspeed;
+    public void setAttackSpeed(Integer attackSpeed) {
+        this.attackSpeed = attackSpeed;
     }
 
     public void setCanShoot(Boolean canShoot) {
@@ -56,13 +56,13 @@ public abstract class Tower extends Military{
             ((Enemy)enemy).setHealth(((Enemy)enemy).getHealth() - this.getPower());
             setCanShoot(false);
 
-            reloadtime.schedule(new TimerTask() {
+            reloadTime.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     setCanShoot(true);
-                    reloadtime.cancel();
+//                    reloadTime.cancel();
                 }
-            }, 0, getAttackspeed());
+            }, 0, getAttackSpeed());
         }
     }
 }
@@ -78,7 +78,7 @@ class Tower1 extends Tower{
         this.setPrice(price);
         this.setViewRange(viewRange);
         this.setPower(power);
-        this.setAttackspeed(attackSpeed);
+        this.setAttackSpeed(attackSpeed);
         this.setCanShoot(true);
     }
 }

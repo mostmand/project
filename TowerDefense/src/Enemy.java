@@ -6,7 +6,7 @@ import java.util.TimerTask;
  * Created by akhavan on 2016-04-17.
  */
 public abstract class Enemy extends Military{
-    Timer reloadtime = new Timer();
+    Timer reloadTime = new Timer();
 
     private Integer cost;
     private Integer speed;
@@ -15,11 +15,10 @@ public abstract class Enemy extends Military{
 
     public void startExhaustTime(){
         setCanMove(false);
-        reloadtime.schedule(new TimerTask() {
+        reloadTime.schedule(new TimerTask() {
             @Override
             public void run() {
                 setCanMove(true);
-//                reloadtime.cancel();
             }
         }, getSpeed());
     }
