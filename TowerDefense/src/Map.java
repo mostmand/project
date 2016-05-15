@@ -4,7 +4,6 @@ import MilitaryForces.Tower;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by qasem on 4/18/16.
@@ -22,8 +21,7 @@ public class Map {
             }
         }
         this.castle = new Sector(null, null);
-//        this.castle.nextSector = this.castle;
-        this.editMap();
+        this.configureMap();
     }
 
     Sector[][] sectors;
@@ -36,12 +34,12 @@ public class Map {
         public Sector(Integer xCoordinate, Integer yCoordinate) {
             this.xCoordinate = xCoordinate;
             this.yCoordinate = yCoordinate;
-            occupant = new ArrayList<>();
+//            occupant = new ArrayList<>();
         }
 
         Integer xCoordinate;
         Integer yCoordinate;
-        ArrayList<Military> occupant;
+//        ArrayList<Military> occupant;
 
 //        public Sector position(){
 //            return this;
@@ -50,42 +48,80 @@ public class Map {
 //        public boolean isOccupied(){
 //            return !occupant.isEmpty();
 //        }
-
-        public boolean isOccupiedByEnemy(){
-            for (Military force : occupant) {
-                if (force instanceof Enemy)
-                    return true;
-            }
-            return false;
-        }
-
-        public boolean isOccupiedByTower(){
-            for (Military force : occupant) {
-                if (force instanceof Tower)
-                    return true;
-            }
-            return false;
-        }
+//
+//        public boolean isOccupiedByEnemy(){
+//            for (Military force : occupant) {
+//                if (force instanceof Enemy)
+//                    return true;
+//            }
+//            return false;
+//        }
+//
+//        public boolean isOccupiedByTower(){
+//            for (Military force : occupant) {
+//                if (force instanceof Tower)
+//                    return true;
+//            }
+//            return false;
+//        }
 
         boolean inPath;
-        Sector nextSector = null;
 
-//        public Sector nextSector(){
-//
-//        }
+        private Sector nextSector = null;
+
+        public Sector getNextSector() {
+            return nextSector;
+        }
+
     }
 
 
     /**
-     *  Edits the Map including:
+     *  Configures the Map including:
      *  1. Adding paths from sources selected by the user or someone else
-     *  2. ...
+     *  2. Some other operations that configure the Map.
+     *
+     *  Operation1: Add path
+     *      Adds a path using one of the addPath functions ,based on how the path is given.
+     *
      */
 
-    public void editMap(){
+    public void configureMap(){
         //get the map from the selected source
-        this.addPath();
+        this.getPath();
+//        this.addPath();
     }
+
+    /**
+     * Default getPath method
+     * Used for giving a Path to the Map manually
+     * @return an two dimensional array, containing
+     *         the coordinates of the breaking points of the Path.
+     */
+
+    public Integer[][] getPath(){
+
+        Integer[][] path = new Integer[10000][2];
+
+        int cnt = 0;
+        path[cnt][0] = 0;
+        path[cnt][1] = 5;
+        cnt++;
+        path[cnt][0] = 9;
+        path[cnt][1] = 5;
+
+        return path;
+    }
+
+    /**
+     *
+     * @param file that shows the next path
+     * @return
+     */
+
+//    public Integer[][] getPath(File file){
+//
+//    }
 
 
     /**
@@ -100,68 +136,5 @@ public class Map {
 
     }
 
-
-    Integer[][] path = new Integer[10000][2];
-
-    public void addPath(){
-        int cnt = 0;
-        /*
-         We have to add a method for setting the path, either manual or automatic.
-         */
-        /*
-         this is a temporary path...
-         */
-        path[cnt][0] = 0;
-        path[cnt][1] = 5;
-        cnt++;
-        path[cnt][0] = 9;
-        path[cnt][1] = 5;
-        cnt++;
-//        while(true){
-//            path[cnt][0] = 1;
-//            path[cnt][1] = 1;
-//            cnt++;
-//            break;
-//        }
-        for (int i = 0; i < cnt-1; i++){
-            if (path[i][0].hashCode() == path[i+1][0].hashCode()){
-                int sgn = (int) Math.signum(path[i+1][1]-path[i][1]);
-                for (int j = path[i][1]; j != path[i+1][1]; j += sgn){
-                    this.sectors[path[i][0]][j].inPath = true;
-                    this.sectors[path[i][0]][j].nextSector = this.sectors[path[i+1][0]][j+sgn];
-                }
-            }
-            else if (path[i][1].hashCode() == path[i+1][1].hashCode()){
-                int sgn = (int)Math.signum(path[i+1][0]-path[i][0]);
-                for (int j = path[i][0]; j != path[i+1][0]; j += sgn){
-                    this.sectors[j][path[i][1]].inPath = true;
-                    this.sectors[j][path[i][1]].nextSector = this.sectors[j+sgn][path[i+1][1]];
-                }
-            }
-        }
-        this.sectors[path[cnt-1][0]][path[cnt-1][1]].nextSector = this.castle;
-    }
-
-//    public void moveWhateverIsIn(Sector sector){
-//        Iterator<Military> iter = sector.occupant.iterator();
-//        int cnt = 0;
-//        while (iter.hasNext()){
-////            System.out.println(cnt);
-////            cnt++;
-//            Military enemy = iter.next();
-//            if (((Enemy)enemy).getCanMove()){
-//                sector.nextSector.occupant.add(enemy);
-//                iter.remove();
-//                ((Enemy)enemy).startExhaustTime();
-//            }
-//        }
-////        for(MilitaryForces.Military enemy: sector.occupant){
-////            if(((MilitaryForces.Enemy)enemy).getCanMove()){
-////                sector.nextSector.occupant.add(enemy);
-////                sector.occupant.remove(enemy);
-////                ((MilitaryForces.Enemy) enemy).startExhaustTime();
-////            }
-////        }
-//    }
 
 }
