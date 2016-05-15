@@ -1,26 +1,35 @@
+import MilitaryForces.Enemy;
+import MilitaryForces.Military;
+import MilitaryForces.Tower;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
  * Created by qasem on 4/18/16.
  */
+
 public class Map {
-    public Map(int length) {
-        this.length = length;
-        this.sectors = new Sector[length][length];
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < length; j++) {
+
+    public Map(int height, int width) {
+        this.height = height;
+        this.width = width;
+        this.sectors = new Sector[height][width];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 this.sectors[i][j] = new Sector(i+1, j+1);
             }
         }
         this.castle = new Sector(null, null);
-        this.castle.nextSector = this.castle;
-        this.addPath();
+//        this.castle.nextSector = this.castle;
+        this.editMap();
     }
 
     Sector[][] sectors;
     Sector castle;
-    Integer length;
+    Integer height;
+    Integer width;
 
     class Sector {
 
@@ -66,6 +75,32 @@ public class Map {
 //        }
     }
 
+
+    /**
+     *  Edits the Map including:
+     *  1. Adding paths from sources selected by the user or someone else
+     *  2. ...
+     */
+
+    public void editMap(){
+        //get the map from the selected source
+        this.addPath();
+    }
+
+
+    /**
+     * We show the path in the file using zeros and ones
+     * Ones indicating the path, then we get the path input from file
+     * This method modifies the {inPath} and {nextSector} field of
+     * @param file shows the Map with the mentioned characteristics
+     * @throws Exception if the Path is invalid (intersecting other path, self-intersecting, ...)
+     */
+
+    public void addPath(File file) throws Exception {
+
+    }
+
+
     Integer[][] path = new Integer[10000][2];
 
     public void addPath(){
@@ -107,26 +142,26 @@ public class Map {
         this.sectors[path[cnt-1][0]][path[cnt-1][1]].nextSector = this.castle;
     }
 
-    public void moveWhateverIsIn(Sector sector){
-        Iterator<Military> iter = sector.occupant.iterator();
-        int cnt = 0;
-        while (iter.hasNext()){
-//            System.out.println(cnt);
-//            cnt++;
-            Military enemy = iter.next();
-            if (((Enemy)enemy).getCanMove()){
-                sector.nextSector.occupant.add(enemy);
-                iter.remove();
-                ((Enemy)enemy).startExhaustTime();
-            }
-        }
-//        for(Military enemy: sector.occupant){
-//            if(((Enemy)enemy).getCanMove()){
+//    public void moveWhateverIsIn(Sector sector){
+//        Iterator<Military> iter = sector.occupant.iterator();
+//        int cnt = 0;
+//        while (iter.hasNext()){
+////            System.out.println(cnt);
+////            cnt++;
+//            Military enemy = iter.next();
+//            if (((Enemy)enemy).getCanMove()){
 //                sector.nextSector.occupant.add(enemy);
-//                sector.occupant.remove(enemy);
-//                ((Enemy) enemy).startExhaustTime();
+//                iter.remove();
+//                ((Enemy)enemy).startExhaustTime();
 //            }
 //        }
-    }
+////        for(MilitaryForces.Military enemy: sector.occupant){
+////            if(((MilitaryForces.Enemy)enemy).getCanMove()){
+////                sector.nextSector.occupant.add(enemy);
+////                sector.occupant.remove(enemy);
+////                ((MilitaryForces.Enemy) enemy).startExhaustTime();
+////            }
+////        }
+//    }
 
 }

@@ -4,7 +4,7 @@
 public class User {
     Integer balance = 22;
     int castleHealth = 30;
-//    Tower[] towers;
+//    MilitaryForces.Tower[] towers;
 
 }
 
