@@ -7,16 +7,50 @@ import java.util.*;
  */
 public class GameEngine {
 
+    private User player;
+    private Map gameMap;
+    Timer globalTime;
+    static Scanner input = new Scanner(System.in);
+    UserInterface userInterface = new UserInterface();
+
+    public GameEngine() {
+
+        this.greetingMessage();
+        this.initializeGame();
+
+    }
+
+    public void initializeGame(){
+        int width = 10;
+        int height = 10;
+        // The width and height of the Map are somehow got from the User.
+        this.gameMap = new Map(width, height);
+        this.player = new User();
+        this.setCastles();
+    }
+
+
+    public void greetingMessage(){
+        System.out.println("Welcome");
+    }
 
     /**
-     * makes a tower at given coordinates.
+     * Contains the list of all the Tower s and Enemy s that have been built.
+     */
+
+    ArrayList<Military> Army;
+
+
+    /**
+     * Gets coordinates from the UserInterface.
+     * Makes a tower at given coordinates.
      * @param xCoordinate the X coordinate at which the Tower will be placed
      * @param yCoordinate the Y coordinate at which the Tower will be placed
      */
 
     public void makeTower(int xCoordinate, int yCoordinate){
         //getCoordinatesFromUser();
-        new Tower1(new Abilities() {
+        Army.add(new Tower1(new Abilities() {
             @Override
             public ArrayList<Military> getMilitaries() {
                 return null;
@@ -26,26 +60,10 @@ public class GameEngine {
             public long getTime() {
                 return (new Date()).getTime();
             }
-        });
+        }));
     }
 
-    private User player;
-    private Map gameMap;
-    Timer globalTime;
-    static Scanner input = new Scanner(System.in);
 
-
-    public GameEngine() {
-        this.gameMap = new Map(10,10);
-        this.player = new User();
-        this.greetingMessage();
-        this.setCastles();
-//        this.startGame();
-    }
-
-    public void greetingMessage(){
-        System.out.println("Welcome");
-    }
     public void setCastles(){
         String str;
         while(true){
@@ -57,21 +75,17 @@ public class GameEngine {
                 int y = input.nextInt();
 
                 if (player.balance < Tower1.INITIAL_PRICE){
-                    System.out.println("Not Enough money to buy this tower");
+                    userInterface.print("Not Enough money to buy this tower");
                     break;
                 }
 
                 if (x < 1 || x > gameMap.width || y < 1 || y > gameMap.height || gameMap.sectors[x-1][y-1].inPath){
-                    System.out.println("Invalid tower coordinates");
+                    userInterface.print("Invalid tower coordinates");
                     break;
                 }
                 player.balance -= Tower1.INITIAL_PRICE;
-//                System.out.println(gameMap.sectors[x-1][y-1].occupant);
-                gameMap.sectors[x-1][y-1].occupant.add(new Tower1());
+                this.makeTower(x, y);
             }
-        }
-        for (int i = 0; i < 2; i++){
-            gameMap.sectors[i][5].occupant.add(new Enemy1());
         }
     }
 
@@ -145,46 +159,6 @@ public class GameEngine {
 //        }
 //    }
 
-//    public void monitorSurroundingsOf(Map.Sector s){
-//        Tower tower = (Tower) s.occupant.get(0);
-//        int x = s.xCoordinate;
-//        int y = s.yCoordinate;
-//        Map.Sector ns;
-//        for (int radius = 1; radius <= tower.getViewRange(); radius++){
-//            for (int xdif = -radius; xdif <= radius; xdif++){
-//                int ydif = radius - Math.abs(xdif);
-//                if (0<=x+xdif && x+xdif< gameMap.length && 0<=y+ydif && y+ydif< gameMap.length){
-//                    ns = gameMap.sectors[x+xdif][y+ydif];
-//                    if (ns.isOccupiedByEnemy()){
-//                        try{
-//                            tower.hit(ns.occupant.get(0));
-//                            if (((Enemy)ns.occupant.get(0)).getHealth() <= 0){
-//                                player.balance += ((Enemy)ns.occupant.get(0)).getCost();
-//                                ns.occupant.remove(0);
-//                            }
-//                        }catch(Exception e){
-//
-//                        }
-//                    }
-//                }
-//                ydif = -ydif;
-//                if (0<=x+xdif && x+xdif< gameMap.length && 0<=y+ydif && y+ydif< gameMap.length){
-//                    ns = gameMap.sectors[x+xdif][y+ydif];
-//                    if (ns.isOccupiedByEnemy()){
-//                        try{
-//                            tower.hit(ns.occupant.get(0));
-//                            if (((Enemy)ns.occupant.get(0)).getHealth() <= 0)
-//                                ns.occupant.remove(0);
-//                        }catch(Exception e){
-//                            System.out.println();
-//                        }
-//                    }
-//                }
-//
-//            }
-//        }
-//
-//    }
 
 
 
