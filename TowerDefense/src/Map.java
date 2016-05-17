@@ -37,6 +37,14 @@ public class Map {
 //            occupant = new ArrayList<>();
         }
 
+        /**
+         * The sector is occupied by anything
+         * path sectors can only be occupied by enemies
+         * and non-path sectors can be occupied by military forces (Towers).
+         */
+        boolean isOccupied;
+
+
         Integer xCoordinate;
         Integer yCoordinate;
 //        ArrayList<Military> occupant;
