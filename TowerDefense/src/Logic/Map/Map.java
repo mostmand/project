@@ -36,6 +36,8 @@ public class Map {
     public Sector getSector(Integer x, Integer y){
         if (x == null || y == null)
             return null;
+        if (x < 1 || x > this.height || y < 1 || y > this.width)
+            return null;
         return this.sectors[x-1][y-1];
     }
 
