@@ -3,8 +3,6 @@ package Logic.MilitaryForces;
 import Logic.Map.Map;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by akhavan on 2016-06-19.
@@ -49,17 +47,7 @@ public class FireTower extends Tower{
 
     @Override
     public void activateAfterAttackEffects(Enemy enemy) {
-        Timer timer = new Timer();
-        Integer[] cnt = {0};
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                enemy.setHealth(enemy.getHealth()-50);
-                cnt[0] += 1;
-                if (cnt[0] >= 2)
-                    timer.cancel();
-            }
-        },50, 50);
+        //this tower is little tricky...
     }
 
     public void activateAfterAttackEffects(Enemy enemy, int strikePower) {
