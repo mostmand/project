@@ -33,7 +33,7 @@ public abstract class Tower extends Military {
     /**
      * Characteristics of the tower
      */
-    private boolean alive = true;
+    public boolean alive = true;
     private MilitaryType type;
     private Integer price;
     private Integer viewRange;
