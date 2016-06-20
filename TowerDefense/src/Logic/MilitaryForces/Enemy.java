@@ -75,6 +75,16 @@ public abstract class Enemy extends Military {
         path.addToPath(this);
     }
 
+    /**
+     *
+     * @return true if the enemy is alive,
+     *         mostly meaning the health be positive,
+     *         unless overwritten otherwise
+     */
+    public boolean isAlive(){
+        return this.getHealth() > 0;
+    }
+
     private long timeOfLastMovement = 0;
 
     private boolean canMove(){
