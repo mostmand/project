@@ -16,7 +16,7 @@ public class BasicEnemy extends Enemy{
     public static final MilitaryType TYPE = MilitaryType.BASIC;
     public static final Integer INITIAL_PRIZE = 1;
     public static final Integer INITIAL_SPEED = 300;
-    public static final Integer INITIAL_HEALTH = 200;
+    public static final Integer INITIAL_HEALTH = 600;
 
     {
         this.setType(TYPE);
@@ -31,6 +31,11 @@ public class BasicEnemy extends Enemy{
 
     public BasicEnemy(Map gameMap, Path path){
         super( gameMap, path );
+    }
+
+    @Override
+    public void getDamage(Tower tower, int damage) {
+        this.setHealth(this.getHealth() - damage);
     }
 
     @Override
