@@ -114,6 +114,8 @@ public abstract class Enemy extends Military {
         return sector.distanceToCastle();
     }
 
+    public abstract void getDamage(Tower tower, int damage);
+
     /**
      * Effects that are activated after an attack has took place.
      * @param attacker the tower that was responsible for the attack
