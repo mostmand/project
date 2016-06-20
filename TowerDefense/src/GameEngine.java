@@ -1,6 +1,12 @@
-import MilitaryForces.*;
+import Logic.Game;
+import Logic.MilitaryForces.Military;
+import Logic.MilitaryForces.MilitaryType;
+import Logic.User;
+import Logic.UserInterface;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.TimerTask;
 
 /**
  * Created by akhavan on 2016-04-18.
@@ -8,30 +14,30 @@ import java.util.*;
 public class GameEngine {
 
     private User player;
-    private Map gameMap;
-    Timer globalTime;
+    private Logic.Map.Map gameMap;
     static Scanner input = new Scanner(System.in);
     UserInterface userInterface = new UserInterface();
-
-    public GameEngine() {
-
-        this.greetingMessage();
-        this.initializeGame();
-
-    }
-
-    public void initializeGame(){
-        int width = 10;
-        int height = 10;
-        // The width and height of the Map are somehow got from the User.
-        this.gameMap = new Map(width, height);
-        this.player = new User();
-        this.setCastles();
-    }
+//
+//    public GameEngine() {
+//
+//        this.greetingMessage();
+//        this.initializeGame();
+//
+//    }
+//
+//    public void initializeGame(){
+//        int width = 10;
+//        int height = 10;
+//        // The width and height of the Map are somehow got from the User.
+//        this.gameMap = new Map(width, height);
+//        this.player = new User();
+//        this.setCastles();
+//    }
 
 
     public void greetingMessage(){
-        System.out.println("Welcome");
+//        System.out.println("Welcome");
+//        Print a message in the user interface
     }
 
     /**
@@ -39,55 +45,55 @@ public class GameEngine {
      */
 
     ArrayList<Military> Army;
+//
+//
+//    /**
+//     * Gets coordinates from the UserInterface.
+//     * Makes a tower at given coordinates.
+//     * @param xCoordinate the X coordinate at which the Tower will be placed
+//     * @param yCoordinate the Y coordinate at which the Tower will be placed
+//     */
+//
+//    public void makeTower(int xCoordinate, int yCoordinate){
+//        //getCoordinatesFromUser();
+//        Army.add(new BasicTower(new Abilities() {
+//            @Override
+//            public ArrayList<Military> getMilitaries() {
+//                return null;
+//            }
+//
+//            @Override
+//            public long getTime() {
+//                return (new Date()).getTime();
+//            }
+//        }));
+//    }
 
-
-    /**
-     * Gets coordinates from the UserInterface.
-     * Makes a tower at given coordinates.
-     * @param xCoordinate the X coordinate at which the Tower will be placed
-     * @param yCoordinate the Y coordinate at which the Tower will be placed
-     */
-
-    public void makeTower(int xCoordinate, int yCoordinate){
-        //getCoordinatesFromUser();
-        Army.add(new Tower1(new Abilities() {
-            @Override
-            public ArrayList<Military> getMilitaries() {
-                return null;
-            }
-
-            @Override
-            public long getTime() {
-                return (new Date()).getTime();
-            }
-        }));
-    }
-
-
-    public void setCastles(){
-        String str;
-        while(true){
-            str = input.next();
-            if (str.equals("Ready"))
-                break;
-            if (str.equals("MilitaryForces.Tower1")){
-                int x = input.nextInt();
-                int y = input.nextInt();
-
-                if (player.balance < Tower1.INITIAL_PRICE){
-                    userInterface.print("Not Enough money to buy this tower");
-                    break;
-                }
-
-                if (x < 1 || x > gameMap.width || y < 1 || y > gameMap.height || gameMap.sectors[x-1][y-1].inPath){
-                    userInterface.print("Invalid tower coordinates");
-                    break;
-                }
-                player.balance -= Tower1.INITIAL_PRICE;
-                this.makeTower(x, y);
-            }
-        }
-    }
+//
+//    public void setCastles(){
+//        String str;
+//        while(true){
+//            str = input.next();
+//            if (str.equals("Ready"))
+//                break;
+//            if (str.equals("MilitaryForces.BasicTower")){
+//                int x = input.nextInt();
+//                int y = input.nextInt();
+//
+//                if (player.balance < BasicTower.INITIAL_PRICE){
+//                    userInterface.print("Not Enough money to buy this tower");
+//                    break;
+//                }
+//
+//                if (x < 1 || x > gameMap.width || y < 1 || y > gameMap.height || gameMap.sectors[x-1][y-1].pathIn != null){
+//                    userInterface.print("Invalid tower coordinates");
+//                    break;
+//                }
+//                player.balance -= BasicTower.INITIAL_PRICE;
+//                this.makeTower(x, y);
+//            }
+//        }
+//    }
 
 //    public void startGame(){
 //        globalTime = new Timer();
@@ -176,7 +182,8 @@ public class GameEngine {
     }
 
     public static void main(String[] args) {
-        GameEngine g = new GameEngine();
+        Game g = new Game();
+        g.setTower(1,1, MilitaryType.BASIC);
     }
 
 

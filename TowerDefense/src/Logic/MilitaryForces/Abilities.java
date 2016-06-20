@@ -1,4 +1,4 @@
-package MilitaryForces;
+package Logic.MilitaryForces;
 
 import java.util.ArrayList;
 

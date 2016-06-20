@@ -1,4 +1,4 @@
-package MilitaryForces;
+package Logic.MilitaryForces;
 
 /**
  * Created by akhavan on 2016-05-09.
@@ -9,7 +9,7 @@ package MilitaryForces;
  *
  */
 
-public class EnemyGroup {
+public class Wave {
 
     /**
      *
