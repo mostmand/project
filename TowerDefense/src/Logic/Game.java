@@ -85,10 +85,17 @@ public class Game {
 
     private void doAttacksAndMoves(){
 
-        towers.forEach(Tower::attack);
+        for (int i = 0; i < towers.size(); i++) {
+            if (!towers.get(i).alive){
+                removeMilitary(towers.get(i));
+                i--;
+                continue;
+            }
+            towers.get(i).attack();
+        }
 
         for (int i = 0; i < enemies.size(); i++) {
-            if (enemies.get(i).getHealth() <= 0){
+            if (!enemies.get(i).isAlive()){
                 removeMilitary(enemies.get(i));
                 i--;
                 continue;
