@@ -33,6 +33,7 @@ public abstract class Tower extends Military {
     /**
      * Characteristics of the tower
      */
+    private boolean alive = true;
     private MilitaryType type;
     private Integer price;
     private Integer viewRange;
@@ -86,7 +87,7 @@ public abstract class Tower extends Military {
      * @return true if the tower can shoot
      */
     public boolean canShoot() {
-        return System.currentTimeMillis() >= timeOfLastAttack + this.getAttackSpeed();
+        return System.currentTimeMillis() >= timeOfLastAttack + this.getAttackSpeed() && this.alive;
     }
 
 
