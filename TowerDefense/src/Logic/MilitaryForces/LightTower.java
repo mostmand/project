@@ -52,6 +52,11 @@ public class LightTower extends Tower {
                 Sector s = gameMap.getSector(enemy.xCoordinate+i, enemy.yCoordinate+j);
                 if (s == null)
                     continue;
+                for (Military m:s.occupant) {
+                    if (m instanceof Enemy)
+                        ((Enemy)m).setHealth((int) (((Enemy)m).getHealth() - 0.4*this.getPower()));
+
+                }
             }
         }
     }
