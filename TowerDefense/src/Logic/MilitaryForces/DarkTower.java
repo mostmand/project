@@ -14,6 +14,8 @@ public class DarkTower extends Tower{
     static public final Integer INITIAL_VIEW_RANGE = 6;
     static public final Integer INITIAL_POWER = 250;
     static public final Integer INITIAL_ATTACK_SPEED = 350;
+    static public final MilitaryType HIGH_PERFORMANCE = MilitaryType.FIRE;
+    static public final MilitaryType LOW_PERFORMANCE = MilitaryType.DARK;
 
     {
         this.setPrice(INITIAL_PRICE);
@@ -21,6 +23,8 @@ public class DarkTower extends Tower{
         this.setType(TYPE);
         this.setPower(INITIAL_POWER);
         this.setAttackSpeed(INITIAL_ATTACK_SPEED);
+        this.highPerformance = HIGH_PERFORMANCE;
+        this.lowPerformance = LOW_PERFORMANCE;
     }
 
     /**
@@ -37,7 +41,10 @@ public class DarkTower extends Tower{
 
     @Override
     public void hit(Enemy enemy) {
-
+        int strikePower = this.getPower();
+        strikePower = super.modifyStrikePower(enemy, strikePower);
+        enemy.setSpeed(enemy.getSpeed() + 50);
+        enemy.getDamage(this, strikePower);
     }
 
     @Override
