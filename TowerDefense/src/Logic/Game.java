@@ -22,7 +22,7 @@ public class Game {
     }
 
     private User player;
-    private Map gameMap;
+    public Map gameMap;
 
 
     /**
