@@ -15,6 +15,8 @@ public class LightTower extends Tower {
     static public final Integer INITIAL_VIEW_RANGE = 5;
     static public final Integer INITIAL_POWER = 300;
     static public final Integer INITIAL_ATTACK_SPEED = 450;
+    static public final MilitaryType HIGH_PERFORMANCE = MilitaryType.LIGHT;
+    static public final MilitaryType LOW_PERFORMANCE = MilitaryType.TREE;
 
     {
         this.setPrice(INITIAL_PRICE);
@@ -22,6 +24,8 @@ public class LightTower extends Tower {
         this.setViewRange(INITIAL_VIEW_RANGE);
         this.setPower(INITIAL_POWER);
         this.setAttackSpeed(INITIAL_ATTACK_SPEED);
+        this.highPerformance = HIGH_PERFORMANCE;
+        this.lowPerformance = LOW_PERFORMANCE;
     }
 
 
@@ -39,12 +43,9 @@ public class LightTower extends Tower {
 
     @Override
     public void hit(Enemy enemy) {
-        int damage = this.getPower();
-        if (enemy.getType() == MilitaryType.LIGHT)
-            damage *= 2;
-        if (enemy.getType() == MilitaryType.TREE)
-            damage /= 2;
-        enemy.getDamage(this, damage);
+        int strikePower = this.getPower();
+        modifyStrikePower(enemy, strikePower);
+        enemy.getDamage(this, strikePower);
         for (int i = -1; i <= 1 ; i++) {
             for (int j = -1; j <= 1; j++) {
                 if (i == 0 && j == 0)

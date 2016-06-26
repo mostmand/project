@@ -17,6 +17,8 @@ public class FireTower extends Tower{
     static public final Integer INITIAL_VIEW_RANGE = 5;
     static public final Integer INITIAL_POWER = 300;
     static public final Integer INITIAL_ATTACK_SPEED = 500;
+    static public final MilitaryType HIGH_PERFORMANCE = MilitaryType.TREE;
+    static public final MilitaryType LOW_PERFORMANCE = MilitaryType.LIGHT;
 
     {
         this.setPrice(INITIAL_PRICE);
@@ -24,6 +26,8 @@ public class FireTower extends Tower{
         this.setPower(INITIAL_POWER);
         this.setAttackSpeed(INITIAL_ATTACK_SPEED);
         this.setType(TYPE);
+        this.highPerformance = HIGH_PERFORMANCE;
+        this.lowPerformance = LOW_PERFORMANCE;
     }
 
     public FireTower(ArrayList<Enemy> enemies, Map gameMap, int xCoordinate, int yCoordinate){
@@ -34,24 +38,16 @@ public class FireTower extends Tower{
     @Override
     public void hit(Enemy enemy) {
         int strikePower = this.getPower();
-        if (enemy.getType() == MilitaryType.TREE)
-            strikePower *= 2;
-        else if (enemy.getType() == MilitaryType.LIGHT)
-            strikePower /= 2;
+        strikePower = super.modifyStrikePower(enemy, strikePower);
 
-        this.activateAfterAttackEffects(enemy);
-        enemy.activateAfterAttackEffects(this);
+        //ability left to be implemented
 
-        enemy.setHealth(enemy.getHealth() - strikePower);
+        enemy.getDamage(this, strikePower);
     }
 
     @Override
     public void activateAfterAttackEffects(Enemy enemy) {
         //this tower is little tricky...
-    }
-
-    public void activateAfterAttackEffects(Enemy enemy, int strikePower) {
-
     }
 
 }
