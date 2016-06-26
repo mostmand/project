@@ -24,7 +24,7 @@ public class TreeTower extends Tower{
     {
         this.setPrice(INITIAL_PRICE);
         this.setViewRange(INITIAL_VIEW_RANGE);
-        this.setAttackSpeed(INITIAL_ATTACK_SPEED);
+        this.setReloadTime(INITIAL_ATTACK_SPEED);
         this.setPower(INITIAL_POWER);
         this.setType(TYPE);
         this.highPerformance = HIGH_PERFORMANCE;

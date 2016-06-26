@@ -23,7 +23,7 @@ public class LightTower extends Tower {
         this.setType(TYPE);
         this.setViewRange(INITIAL_VIEW_RANGE);
         this.setPower(INITIAL_POWER);
-        this.setAttackSpeed(INITIAL_ATTACK_SPEED);
+        this.setReloadTime(INITIAL_ATTACK_SPEED);
         this.highPerformance = HIGH_PERFORMANCE;
         this.lowPerformance = LOW_PERFORMANCE;
     }

@@ -38,7 +38,7 @@ public abstract class Tower extends Military {
     private Integer price;
     private Integer viewRange;
     private Integer power;
-    private Integer attackSpeed;
+    private Integer reloadTime;
 
     public MilitaryType getType() {
         return type;
@@ -69,11 +69,11 @@ public abstract class Tower extends Military {
         this.power = power;
     }
 
-    public Integer getAttackSpeed() {
-        return attackSpeed;
+    public Integer getReloadTime() {
+        return reloadTime;
     }
-    public void setAttackSpeed(Integer attackSpeed) {
-        this.attackSpeed = attackSpeed;
+    public void setReloadTime(Integer reloadTime) {
+        this.reloadTime = reloadTime;
     }
 
 
@@ -87,7 +87,7 @@ public abstract class Tower extends Military {
      * @return true if the tower can shoot
      */
     public boolean canShoot() {
-        return System.currentTimeMillis() >= timeOfLastAttack + this.getAttackSpeed() && this.alive;
+        return System.currentTimeMillis() >= timeOfLastAttack + this.getReloadTime() && this.alive;
     }
 
 

@@ -34,7 +34,7 @@ public class FireEnemy extends Enemy {
     @Override
     public void getDamage(Tower tower, int damage) {
         if (Math.random() < 0.4)
-            tower.setAttackSpeed(tower.getAttackSpeed() + 50);
+            tower.setReloadTime(tower.getReloadTime() + 50);
         this.setHealth(this.getHealth() - damage);
     }
 
