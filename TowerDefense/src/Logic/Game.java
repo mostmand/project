@@ -83,6 +83,26 @@ public class Game {
         this.gameMap.getSector(xCoordinate,yCoordinate).occupant.add(newTower);
     }
 
+    /**
+     * Upgrades the given tower and returns an error code in case of an error
+     * 1 --> Insufficient balance
+     * 3 --> null tower given
+     * 0 --> Successful upgrade
+     * @param tower that is to be upgraded
+     */
+
+    public int upgradeTower(Tower tower){
+        if (tower == null) {
+            return 3;
+        }
+        if (player.balance < tower.getType().initialPrice){
+            return 1;
+        }
+        player.balance -= tower.getType().initialPrice/2;
+        tower.upgrade();
+        return 0;
+    }
+
     private void doAttacksAndMoves(){
 
         for (int i = 0; i < towers.size(); i++) {

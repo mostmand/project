@@ -43,7 +43,6 @@ public abstract class Tower extends Military {
     public MilitaryType getType() {
         return type;
     }
-
     public void setType(MilitaryType type) {
         this.type = type;
     }
@@ -149,6 +148,16 @@ public abstract class Tower extends Military {
     public abstract void hit(Enemy enemy);
 
     public abstract void activateAfterAttackEffects(Enemy enemy);
+
+
+    /**
+     * Upgrades this tower
+     */
+    public void upgrade(){
+        this.price += this.type.initialPrice;
+        this.power += 100;
+        this.reloadTime += 50;
+    }
 
 }
 
