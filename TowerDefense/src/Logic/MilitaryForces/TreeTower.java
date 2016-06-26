@@ -18,6 +18,8 @@ public class TreeTower extends Tower{
     static public final Integer INITIAL_VIEW_RANGE = 6;
     static public final Integer INITIAL_POWER = 350;
     static public final Integer INITIAL_ATTACK_SPEED = 400;
+    static public final MilitaryType HIGH_PERFORMANCE = MilitaryType.DARK;
+    static public final MilitaryType LOW_PERFORMANCE = MilitaryType.FIRE;
 
     {
         this.setPrice(INITIAL_PRICE);
@@ -25,6 +27,8 @@ public class TreeTower extends Tower{
         this.setAttackSpeed(INITIAL_ATTACK_SPEED);
         this.setPower(INITIAL_POWER);
         this.setType(TYPE);
+        this.highPerformance = HIGH_PERFORMANCE;
+        this.lowPerformance = LOW_PERFORMANCE;
     }
 
     public TreeTower(ArrayList<Enemy> enemies, Map gameMap, int xCoordinate, int yCoordinate){
