@@ -128,6 +128,17 @@ public abstract class Tower extends Military {
         this.timeOfLastAttack = System.currentTimeMillis();
     }
 
+    MilitaryType highPerformance;
+    MilitaryType lowPerformance;
+
+    protected int modifyStrikePower(Enemy enemy, int strikePower){
+        if (enemy.getType() == highPerformance)
+            strikePower *= 2;
+        else if (enemy.getType() == lowPerformance)
+            strikePower /= 2;
+        return strikePower;
+    }
+
     /**
      * This method is implemented in each child of {@code MilitaryForces.Tower}
      * separately because different towers attack differently
