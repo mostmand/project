@@ -24,6 +24,7 @@ public class Game {
     private User player;
     public Map gameMap;
 
+    int level;
 
     /**
      * Consists of a timer that does all the stuff
@@ -38,7 +39,7 @@ public class Game {
                 doAttacksAndMoves();
                 showTheMap();
             }
-        },0,13);
+        },0,1);
     }
 
     /**
@@ -85,10 +86,10 @@ public class Game {
 
     /**
      * Upgrades the given tower and returns an error code in case of an error
-     * 1 --> Insufficient balance
-     * 3 --> null tower given
-     * 0 --> Successful upgrade
      * @param tower that is to be upgraded
+     * @return 1 --> Insufficient balance
+     *         3 --> null tower given
+     *         0 --> Successful upgrade
      */
 
     public int upgradeTower(Tower tower){

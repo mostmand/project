@@ -72,7 +72,7 @@ public class Map {
     }
 
 
-    public void addDefaultPath(){
+    private void addDefaultPath(){
         Path path = new Path(this.sectors[0][this.width/2]);
         for (int i = 1; i < this.height; i++) {
             path.addSectorToPath(this.sectors[i][this.width/2]);
