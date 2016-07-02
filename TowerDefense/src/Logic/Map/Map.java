@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Map {
 
     public Map(){
-        this(10, 10);
+        this(20, 20);
     }
 
     public Map(int height, int width) {
