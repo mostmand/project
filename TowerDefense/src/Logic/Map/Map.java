@@ -90,5 +90,9 @@ public class Map {
         this.paths.add(path);
     }
 
+    public Sector getSectorAt(Sector sector, int difX, int difY){
+        return getSector(sector.xCoordinate + difX, sector.yCoordinate + difY);
+    }
+
 
 }
