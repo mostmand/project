@@ -35,19 +35,4 @@ public class FireTower extends Tower{
     }
 
 
-    @Override
-    public void hit(Enemy enemy) {
-        int strikePower = this.getPower();
-        strikePower = super.modifyStrikePower(enemy, strikePower);
-
-        //ability left to be implemented
-
-        enemy.getDamage(this, strikePower);
-    }
-
-    @Override
-    public void activateAfterAttackEffects(Enemy enemy) {
-        //this tower is little tricky...
-    }
-
 }

@@ -36,13 +36,4 @@ public class BasicTower extends Tower{
         super(enemies, gameMap, xCoordinate, yCoordinate);
     }
 
-    @Override
-    public void hit(Enemy enemy){
-        enemy.setHealth(enemy.getHealth() - this.getPower());
-    }
-
-    @Override
-    public void activateAfterAttackEffects(Enemy enemy) {
-
-    }
 }

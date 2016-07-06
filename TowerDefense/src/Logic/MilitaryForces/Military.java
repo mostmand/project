@@ -11,7 +11,7 @@ public abstract class Military{
     /**
      * The map that this piece is in
      */
-    protected Map gameMap;
+    public Map gameMap;
 
     /**
      * The coordinates of this piece inside the map that it is in

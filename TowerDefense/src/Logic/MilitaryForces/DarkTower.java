@@ -39,16 +39,4 @@ public class DarkTower extends Tower{
         super(enemies, gameMap, xCoordinate, yCoordinate);
     }
 
-    @Override
-    public void hit(Enemy enemy) {
-        int strikePower = this.getPower();
-        strikePower = super.modifyStrikePower(enemy, strikePower);
-        enemy.setSpeed(enemy.getSpeed() + 50);
-        enemy.getDamage(this, strikePower);
-    }
-
-    @Override
-    public void activateAfterAttackEffects(Enemy enemy) {
-
-    }
 }

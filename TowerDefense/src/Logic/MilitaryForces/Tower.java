@@ -1,5 +1,6 @@
 package Logic.MilitaryForces;
 
+import Logic.Attack;
 import Logic.Map.Map;
 import Logic.Map.Sector;
 
@@ -123,31 +124,12 @@ public abstract class Tower extends Military {
         Enemy enemy = findTarget();
         if (enemy == null)
             return;
-        hit(enemy);
+        new Attack(this, enemy);
         this.timeOfLastAttack = System.currentTimeMillis();
     }
 
-    protected MilitaryType highPerformance = null;
-    protected MilitaryType lowPerformance = null;
-
-    protected int modifyStrikePower(Enemy enemy, int strikePower){
-        if (enemy.getType() == highPerformance)
-            strikePower *= 2;
-        else if (enemy.getType() == lowPerformance)
-            strikePower /= 2;
-        return strikePower;
-    }
-
-    /**
-     * This method is implemented in each child of {@code MilitaryForces.Tower}
-     * separately because different towers attack differently
-     *
-     * @param enemy that should be hit
-     */
-
-    public abstract void hit(Enemy enemy);
-
-    public abstract void activateAfterAttackEffects(Enemy enemy);
+    public MilitaryType highPerformance = null;
+    public MilitaryType lowPerformance = null;
 
 
     /**
