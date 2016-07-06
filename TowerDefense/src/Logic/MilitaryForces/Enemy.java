@@ -34,6 +34,10 @@ public abstract class Enemy extends Military {
         return health;
     }
 
+    public void reduceHealth(Integer damage){
+        setHealth(getHealth() - damage);
+    }
+
     public void setCost(Integer cost) {
         this.cost = cost;
     }
@@ -87,8 +91,10 @@ public abstract class Enemy extends Military {
 
     private long timeOfLastMovement = 0;
 
+    public boolean stunned = false;
+
     private boolean canMove(){
-        return System.currentTimeMillis() >= timeOfLastMovement + this.getSpeed();
+        return System.currentTimeMillis() >= timeOfLastMovement + this.getSpeed() &&  !stunned;
     }
 
     /**

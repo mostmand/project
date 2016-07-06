@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <ScrollPane hbarPolicy="NEVER" layoutX="6.0" layoutY="6.0" prefHeight="590.0" prefWidth="658.0" vbarPolicy="NEVER">
+         <content>
+            <GridPane fx:id="map" alignment="CENTER" focusTraversable="true" onMouseClicked="#setTower" prefHeight="147.0" prefWidth="139.0" style="-fx-border-style: solid inside; -fx-border-width: 2; -fx-border-radius: 5; -fx-grid-lines-visible: true;">
+               <rowConstraints>
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
+               </rowConstraints>
+               <columnConstraints>
+                  <ColumnConstraints minWidth="10.0" prefWidth="40.0" />
+               </columnConstraints>
+               <rotationAxis>
+                  <Point3D x="1.0" />
+               </rotationAxis>
+            </GridPane>
+         </content>
+      </ScrollPane>
+      <Button fx:id="columnButton" layoutX="687.0" layoutY="201.0" mnemonicParsing="false" text="Add Column" />
+      <Button fx:id="rowButton" layoutX="696.0" layoutY="294.0" mnemonicParsing="false" text="Add Row" />
+      <ImageView fx:id="tower" fitHeight="79.0" fitWidth="69.0" layoutX="695.0" layoutY="34.0" onMouseClicked="#addTower" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: darkblue; -fx-border-style: solid inside; -fx-border-width: 2;">
+         <image>
+            <Image url="@Images/basicTower.jpg" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

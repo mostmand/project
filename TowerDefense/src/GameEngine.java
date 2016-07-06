@@ -1,18 +1,13 @@
 import Logic.Game;
-import javafx.animation.Interpolator;
-import javafx.animation.RotateTransition;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.*;
 import javafx.scene.control.Button;
-import javafx.scene.layout.*;
-import javafx.scene.shape.Circle;
-import javafx.scene.transform.Rotate;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+
+import java.io.IOException;
 
 /**
  * Created by akhavan on 2016-04-18.
@@ -24,23 +19,24 @@ public class GameEngine extends Application{
     }
 
 
-    public static final int WINDOW_HEIGHT = 300;
-    public static final int WINDOW_WIDTH = 300;
+    public static final int WINDOW_HEIGHT = 600;
+    public static final int WINDOW_WIDTH = 900;
+
+    Image image = new Image("View/Images/grass.png");
+
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         Group group = new Group();
         Button startButton = new Button("Start Game");
-        startButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        startButton.setOnAction(event -> {
 //                primaryStage.close();
-                startGame(primaryStage);
-            }
+            startGame(primaryStage);
         });
         group.getChildren().addAll(startButton);
-        Scene scene = new Scene(group, WINDOW_WIDTH, WINDOW_HEIGHT);
-        primaryStage.setScene(scene);
+
+        primaryStage.setScene(makeScene(group));
         primaryStage.show();
     }
 
@@ -49,36 +45,21 @@ public class GameEngine extends Application{
     public void startGame(Stage stage){
         game = new Game();
 
-        Node map = generateMap();
-        StackPane stackPane = new StackPane();
-        stackPane.getChildren().addAll(map);
+        AnchorPane page = null;
+        try {
+            page = FXMLLoader.load(GameEngine.class.getResource("/View/playScreen.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        Scene scene = new Scene(stackPane, WINDOW_WIDTH, WINDOW_HEIGHT);
-
-        stage.setScene(scene);
+        stage.setScene(makeScene(page));
         stage.show();
 
     }
 
-    private RotateTransition createRotator(Node card) {
-        RotateTransition rotator = new RotateTransition(Duration.millis(10000), card);
-        rotator.setAxis(Rotate.Y_AXIS);
-        rotator.setFromAngle(0);
-        rotator.setToAngle(360);
-        rotator.setCycleCount(10);
-        rotator.setInterpolator(Interpolator.LINEAR);
-        return rotator;
-    }
-
-    public Node generateMap(){
-        VBox map = new VBox();
-        for (int i = 0; i < game.gameMap.height; i++) {
-            HBox row = new HBox();
-            for (int j = 0; j < game.gameMap.width; j++) {
-                row.getChildren().addAll(new Circle(10));
-            }
-            map.getChildren().addAll(row);
-        }
-        return map;
+    private Scene makeScene(Node node){
+        Scene scene = new Scene((Parent) node, WINDOW_WIDTH, WINDOW_HEIGHT);
+        scene.setCursor(new ImageCursor(new Image("/View/Images/cursor.png")));
+        return scene;
     }
 }

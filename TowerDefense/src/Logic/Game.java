@@ -24,6 +24,7 @@ public class Game {
     private User player;
     public Map gameMap;
 
+    int level;
 
     /**
      * Consists of a timer that does all the stuff
@@ -36,9 +37,8 @@ public class Game {
             @Override
             public void run() {
                 doAttacksAndMoves();
-                showTheMap();
             }
-        },0,13);
+        },0,1);
     }
 
     /**
@@ -81,6 +81,26 @@ public class Game {
         Tower newTower = new BasicTower(this.enemies, this.gameMap, xCoordinate, yCoordinate);
         towers.add(newTower);
         this.gameMap.getSector(xCoordinate,yCoordinate).occupant.add(newTower);
+    }
+
+    /**
+     * Upgrades the given tower and returns an error code in case of an error
+     * @param tower that is to be upgraded
+     * @return 1 --> Insufficient balance
+     *         3 --> null tower given
+     *         0 --> Successful upgrade
+     */
+
+    public int upgradeTower(Tower tower){
+        if (tower == null) {
+            return 3;
+        }
+        if (player.balance < tower.getType().initialPrice){
+            return 1;
+        }
+        player.balance -= tower.getType().initialPrice/2;
+        tower.upgrade();
+        return 0;
     }
 
     private void doAttacksAndMoves(){
@@ -130,43 +150,8 @@ public class Game {
         },0,350);
     }
 
-    private void showTheMap() {
-        for (int i = 1; i <= gameMap.height; i++) {
-            for (int j = 1; j <= gameMap.width; j++) {
-                if (!gameMap.getSector(i,j).occupant.isEmpty()){
-                    if (gameMap.getSector(i,j).occupant.get(0) instanceof Tower)
-                        System.out.print("T");
-                    else
-                        System.out.print("E" + ((Enemy)gameMap.getSector(i,j).occupant.get(0)).getHealth().toString());
-                }
-                else if (gameMap.getSector(i,j).pathIn != null){
-                    System.out.print(".");
-                }
-                else{
-                    System.out.print("-");
-                }
-                System.out.print("     ");
-            }
-            System.out.println();
-            System.out.println();
-            System.out.println();
-            System.out.println();
-        }
-        System.out.println();
-        System.out.println("__________________________________________________________________");
-        System.out.println();
-        System.out.println();
-
-    }
-
     public static void main(String[] args) {
-        Game g = new Game();
-        g.setTower(1,1, MilitaryType.BASIC);
 
-        g.showTheMap();
-        System.out.println();
-
-        g.startGame();
     }
 
 

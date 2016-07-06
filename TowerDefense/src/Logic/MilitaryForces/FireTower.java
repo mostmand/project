@@ -24,7 +24,7 @@ public class FireTower extends Tower{
         this.setPrice(INITIAL_PRICE);
         this.setViewRange(INITIAL_VIEW_RANGE);
         this.setPower(INITIAL_POWER);
-        this.setAttackSpeed(INITIAL_ATTACK_SPEED);
+        this.setReloadTime(INITIAL_ATTACK_SPEED);
         this.setType(TYPE);
         this.highPerformance = HIGH_PERFORMANCE;
         this.lowPerformance = LOW_PERFORMANCE;
@@ -34,20 +34,5 @@ public class FireTower extends Tower{
         super(enemies, gameMap, xCoordinate, yCoordinate);
     }
 
-
-    @Override
-    public void hit(Enemy enemy) {
-        int strikePower = this.getPower();
-        strikePower = super.modifyStrikePower(enemy, strikePower);
-
-        //ability left to be implemented
-
-        enemy.getDamage(this, strikePower);
-    }
-
-    @Override
-    public void activateAfterAttackEffects(Enemy enemy) {
-        //this tower is little tricky...
-    }
 
 }

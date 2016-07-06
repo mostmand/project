@@ -38,12 +38,11 @@ public abstract class Tower extends Military {
     private Integer price;
     private Integer viewRange;
     private Integer power;
-    private Integer attackSpeed;
+    private Integer reloadTime;
 
     public MilitaryType getType() {
         return type;
     }
-
     public void setType(MilitaryType type) {
         this.type = type;
     }
@@ -69,11 +68,11 @@ public abstract class Tower extends Military {
         this.power = power;
     }
 
-    public Integer getAttackSpeed() {
-        return attackSpeed;
+    public Integer getReloadTime() {
+        return reloadTime;
     }
-    public void setAttackSpeed(Integer attackSpeed) {
-        this.attackSpeed = attackSpeed;
+    public void setReloadTime(Integer reloadTime) {
+        this.reloadTime = reloadTime;
     }
 
 
@@ -87,7 +86,7 @@ public abstract class Tower extends Military {
      * @return true if the tower can shoot
      */
     public boolean canShoot() {
-        return System.currentTimeMillis() >= timeOfLastAttack + this.getAttackSpeed() && this.alive;
+        return System.currentTimeMillis() >= timeOfLastAttack + this.getReloadTime() && this.alive;
     }
 
 
@@ -124,31 +123,22 @@ public abstract class Tower extends Military {
         Enemy enemy = findTarget();
         if (enemy == null)
             return;
-        hit(enemy);
+        new Attack(this, enemy);
         this.timeOfLastAttack = System.currentTimeMillis();
     }
 
-    protected MilitaryType highPerformance;
-    protected MilitaryType lowPerformance;
+    public MilitaryType highPerformance = null;
+    public MilitaryType lowPerformance = null;
 
-    protected int modifyStrikePower(Enemy enemy, int strikePower){
-        if (enemy.getType() == highPerformance)
-            strikePower *= 2;
-        else if (enemy.getType() == lowPerformance)
-            strikePower /= 2;
-        return strikePower;
-    }
 
     /**
-     * This method is implemented in each child of {@code MilitaryForces.Tower}
-     * separately because different towers attack differently
-     *
-     * @param enemy that should be hit
+     * Upgrades this tower
      */
-
-    public abstract void hit(Enemy enemy);
-
-    public abstract void activateAfterAttackEffects(Enemy enemy);
+    public void upgrade(){
+        this.price += this.type.initialPrice;
+        this.power += 100;
+        this.reloadTime += 50;
+    }
 
 }
 

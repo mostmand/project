@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Map {
 
     public Map(){
-        this(10, 10);
+        this(20, 20);
     }
 
     public Map(int height, int width) {
@@ -72,7 +72,7 @@ public class Map {
     }
 
 
-    public void addDefaultPath(){
+    private void addDefaultPath(){
         Path path = new Path(this.sectors[0][this.width/2]);
         for (int i = 1; i < this.height; i++) {
             path.addSectorToPath(this.sectors[i][this.width/2]);
@@ -88,6 +88,10 @@ public class Map {
             path.addSectorToPath(this.sectors[i][this.width/2-1]);
         }
         this.paths.add(path);
+    }
+
+    public Sector getSectorAt(Sector sector, int difX, int difY){
+        return getSector(sector.xCoordinate + difX, sector.yCoordinate + difY);
     }
 
 

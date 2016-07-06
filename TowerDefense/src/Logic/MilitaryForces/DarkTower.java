@@ -14,13 +14,17 @@ public class DarkTower extends Tower{
     static public final Integer INITIAL_VIEW_RANGE = 6;
     static public final Integer INITIAL_POWER = 250;
     static public final Integer INITIAL_ATTACK_SPEED = 350;
+    static public final MilitaryType HIGH_PERFORMANCE = MilitaryType.FIRE;
+    static public final MilitaryType LOW_PERFORMANCE = MilitaryType.DARK;
 
     {
         this.setPrice(INITIAL_PRICE);
         this.setViewRange(INITIAL_VIEW_RANGE);
         this.setType(TYPE);
         this.setPower(INITIAL_POWER);
-        this.setAttackSpeed(INITIAL_ATTACK_SPEED);
+        this.setReloadTime(INITIAL_ATTACK_SPEED);
+        this.highPerformance = HIGH_PERFORMANCE;
+        this.lowPerformance = LOW_PERFORMANCE;
     }
 
     /**
@@ -35,13 +39,4 @@ public class DarkTower extends Tower{
         super(enemies, gameMap, xCoordinate, yCoordinate);
     }
 
-    @Override
-    public void hit(Enemy enemy) {
-
-    }
-
-    @Override
-    public void activateAfterAttackEffects(Enemy enemy) {
-
-    }
 }
