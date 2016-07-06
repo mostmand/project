@@ -1,6 +1,5 @@
 package Logic.MilitaryForces;
 
-import Logic.Attack;
 import Logic.Map.Map;
 import Logic.Map.Sector;
 

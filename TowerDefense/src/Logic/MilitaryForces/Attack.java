@@ -1,9 +1,6 @@
-package Logic;
+package Logic.MilitaryForces;
 
 import Logic.Map.Sector;
-import Logic.MilitaryForces.Enemy;
-import Logic.MilitaryForces.Military;
-import Logic.MilitaryForces.Tower;
 
 import java.util.Timer;
 import java.util.TimerTask;
