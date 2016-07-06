@@ -1,8 +1,7 @@
 import Logic.Game;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -16,7 +15,7 @@ import java.io.IOException;
 public class GameEngine extends Application{
 
     public static void main(String[] args) {
-        Application.launch(GameEngine.class, new String[0]);
+        launch(args);
     }
 
 
@@ -36,8 +35,8 @@ public class GameEngine extends Application{
             startGame(primaryStage);
         });
         group.getChildren().addAll(startButton);
-        Scene scene = new Scene(group, WINDOW_WIDTH, WINDOW_HEIGHT);
-        primaryStage.setScene(scene);
+
+        primaryStage.setScene(makeScene(group));
         primaryStage.show();
     }
 
@@ -53,12 +52,14 @@ public class GameEngine extends Application{
             e.printStackTrace();
         }
 
-//        if (page == null)
-//            page = new AnchorPane();
-        Scene scene = new Scene(page, WINDOW_WIDTH, WINDOW_HEIGHT);
-//        scene.setCursor(new ImageCursor(image));
-        stage.setScene(scene);
+        stage.setScene(makeScene(page));
         stage.show();
 
+    }
+
+    private Scene makeScene(Node node){
+        Scene scene = new Scene((Parent) node, WINDOW_WIDTH, WINDOW_HEIGHT);
+        scene.setCursor(new ImageCursor(new Image("/View/Images/cursor.png")));
+        return scene;
     }
 }

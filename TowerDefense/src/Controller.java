@@ -1,7 +1,6 @@
 import Logic.Game;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -48,16 +47,12 @@ public class Controller{
                 map.add(imageView, j, i);
             }
         }
+        ImageView imageView = new ImageView("/View/Images/basicTower.jpg");
+        imageView.setFitHeight(40);
+        imageView.setFitWidth(20);
+        map.add(imageView, 0, 0);
     }
 
-    private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
-        for (Node node : gridPane.getChildren()) {
-            if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
-                return node;
-            }
-        }
-        return null;
-    }
 
     @FXML
     ImageView grass;
