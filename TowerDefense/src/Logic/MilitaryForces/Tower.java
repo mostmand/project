@@ -135,7 +135,7 @@ public abstract class Tower extends Military {
      * Upgrades this tower
      */
     public void upgrade(){
-        this.price += this.type.initialPrice;
+        this.price += this.type.initialPrice();
         this.power += 100;
         this.reloadTime += 50;
     }
