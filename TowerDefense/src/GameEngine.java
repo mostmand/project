@@ -22,7 +22,7 @@ public class GameEngine extends Application{
     public static final int WINDOW_HEIGHT = 600;
     public static final int WINDOW_WIDTH = 900;
 
-    Image image = new Image("View/Images/grass.png");
+//    Image image = new Image("View/Images/grass.png");
 
 
 
