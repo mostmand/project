@@ -1,18 +1,18 @@
 package Logic;
 
+import Logic.Exceptions.InsufficientBalanceException;
+import Logic.Exceptions.InvalidCombinationException;
+import Logic.Exceptions.InvalidCoordinatesException;
 import Logic.Map.Map;
 import Logic.Map.Path;
 import Logic.MilitaryForces.*;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by akhavan on 2016-06-09.
- */
 public class Game {
-
 
     public Game(){
         this.gameMap = new Map();
@@ -52,59 +52,63 @@ public class Game {
      * @param x of the tower
      * @param y of the tower
      * @param type of the tower
-     * @return 0 if the tower was set properly
-     *         1 if the user money was insufficient
-     *         2 if the coordinates are invalid
+     * @throws Exception
      */
-    public int setTower(int x, int y, MilitaryType type){
-        int price = 0;
-        if (type == MilitaryType.BASIC)
-            price = BasicTower.INITIAL_PRICE;
+    public void setTower(int x, int y, MilitaryType type) throws Exception{
+        Integer price = type.initialPrice();
         if (player.balance < price){
-            return 1;
+            throw new InsufficientBalanceException();
         }
-        if (x < 1 || x > gameMap.width || y < 1 || y > gameMap.height || gameMap.getSector(x,y).pathIn != null){
-            return 2;
+        if (x < 1 || x > gameMap.width || y < 1 || y > gameMap.height || gameMap.getSector(x,y).inPath()){
+            throw new InvalidCoordinatesException();
         }
         player.balance -= price;
-        this.makeBasicTower(x, y);
-        return 0;
+
+        Constructor c = type.getTowerType().getConstructor(ArrayList.class, Map.class, int.class, int.class);
+        Tower newTower;
+        newTower = (Tower) c.newInstance(this.enemies, gameMap, x, y);
+        towers.add(newTower);
+        this.gameMap.getSector(x,y).occupant.add(newTower);
     }
 
-    /**
-     * Gets coordinates from the UserInterface.
-     * Makes a tower at given coordinates.
-     * @param xCoordinate the X coordinate at which the Tower will be placed
-     * @param yCoordinate the Y coordinate at which the Tower will be placed
-     */
-    private void makeBasicTower(int xCoordinate, int yCoordinate){
-        Tower newTower = new BasicTower(this.enemies, this.gameMap, xCoordinate, yCoordinate);
-        towers.add(newTower);
-        this.gameMap.getSector(xCoordinate,yCoordinate).occupant.add(newTower);
-    }
+//    /**
+//     * Gets coordinates from the UserInterface.
+//     * Makes a tower at given coordinates.
+//     * @param xCoordinate the X coordinate at which the Tower will be placed
+//     * @param yCoordinate the Y coordinate at which the Tower will be placed
+//     */
+//    private void makeBasicTower(int xCoordinate, int yCoordinate){
+//        Tower newTower = new BasicTower(this.enemies, this.gameMap, xCoordinate, yCoordinate);
+//        towers.add(newTower);
+//        this.gameMap.getSector(xCoordinate,yCoordinate).occupant.add(newTower);
+//    }
 
     /**
      * Upgrades the given tower and returns an error code in case of an error
      * @param tower that is to be upgraded
-     * @return 1 --> Insufficient balance
-     *         3 --> null tower given
-     *         0 --> Successful upgrade
+     * @throws Exception
      */
 
-    public int upgradeTower(Tower tower){
+    public void upgradeTower(Tower tower) throws Exception{
         if (tower == null) {
-            return 3;
+            return;
         }
-        if (player.balance < tower.getType().initialPrice){
-            return 1;
+        if (player.balance < tower.getType().initialPrice()){
+            throw new InsufficientBalanceException();
         }
-        player.balance -= tower.getType().initialPrice/2;
+        player.balance -= tower.getType().initialPrice()/2;
         tower.upgrade();
-        return 0;
+    }
+
+    public void combineTowers(Tower baseTower, Tower combinedTower) throws Exception{
+        if (baseTower == null || combinedTower == null)
+            return;
+        if (!baseTower.canCombine(combinedTower))
+            throw new InvalidCombinationException();
+        baseTower.combine(combinedTower);
     }
 
     private void doAttacksAndMoves(){
-
         for (int i = 0; i < towers.size(); i++) {
             if (!towers.get(i).alive){
                 removeMilitary(towers.get(i));
@@ -113,9 +117,14 @@ public class Game {
             }
             towers.get(i).attack();
         }
-
         for (int i = 0; i < enemies.size(); i++) {
             if (!enemies.get(i).isAlive()){
+                removeMilitary(enemies.get(i));
+                i--;
+                continue;
+            }
+            if (enemies.get(i).getSector() == null){
+                player.castleHealth--;
                 removeMilitary(enemies.get(i));
                 i--;
                 continue;
@@ -124,7 +133,7 @@ public class Game {
         }
     }
 
-    public void removeMilitary(Military military){
+    private void removeMilitary(Military military){
         if (military instanceof Tower)
             towers.remove(military);
         else if (military instanceof Enemy)
@@ -149,11 +158,5 @@ public class Game {
             }
         },0,350);
     }
-
-    public static void main(String[] args) {
-
-    }
-
-
 
 }

@@ -2,7 +2,6 @@ import Logic.Game;
 import Logic.Map.Sector;
 import Logic.MilitaryForces.Enemy;
 import Logic.MilitaryForces.Military;
-import Logic.MilitaryForces.MilitaryType;
 import Logic.MilitaryForces.Tower;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -35,7 +34,7 @@ public class Controller{
     @FXML
     public void initialize() {
         game = new Game();
-        game.setTower(2,3, MilitaryType.BASIC);
+//        game.setTower(2,3, MilitaryType.BASIC);
 
         map.getColumnConstraints().remove(0);
         for (int i = 0; i < game.gameMap.width; i++) {
