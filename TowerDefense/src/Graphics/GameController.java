@@ -51,7 +51,7 @@ public class GameController implements Initializable {
         try{
             game = new Game();
 //            game.setTower(1, 1, MilitaryType.BASIC);
-//            game.setTower(15, 5, MilitaryType.DARK);
+            game.setTower(15, 5, MilitaryType.DARK);
             game.startGame();
             scheduleTimer();
             gridInit();

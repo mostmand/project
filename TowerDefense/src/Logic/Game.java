@@ -42,7 +42,7 @@ public class Game {
      * Contains the list of all the Tower s and Enemy s that have been built.
      */
     private ArrayList<Tower> towers;
-    public ArrayList<Enemy> enemies;
+    private ArrayList<Enemy> enemies;
 
     /**
      * Sets the tower with type, type, at the given coordinates -->(x,y)
