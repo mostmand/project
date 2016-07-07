@@ -1,10 +1,7 @@
 package Logic;
 
-import Logic.Exceptions.InsufficientBalanceException;
-import Logic.Exceptions.InvalidCombinationException;
-import Logic.Exceptions.InvalidCoordinatesException;
-import Logic.Map.Map;
-import Logic.Map.Path;
+import Logic.Exceptions.*;
+import Logic.Map.*;
 import Logic.MilitaryForces.*;
 
 import java.lang.reflect.Constructor;
@@ -45,7 +42,7 @@ public class Game {
      * Contains the list of all the Tower s and Enemy s that have been built.
      */
     private ArrayList<Tower> towers;
-    private ArrayList<Enemy> enemies;
+    public ArrayList<Enemy> enemies;
 
     /**
      * Sets the tower with type, type, at the given coordinates -->(x,y)
@@ -71,18 +68,6 @@ public class Game {
         this.gameMap.getSector(x,y).occupant.add(newTower);
     }
 
-//    /**
-//     * Gets coordinates from the UserInterface.
-//     * Makes a tower at given coordinates.
-//     * @param xCoordinate the X coordinate at which the Tower will be placed
-//     * @param yCoordinate the Y coordinate at which the Tower will be placed
-//     */
-//    private void makeBasicTower(int xCoordinate, int yCoordinate){
-//        Tower newTower = new BasicTower(this.enemies, this.gameMap, xCoordinate, yCoordinate);
-//        towers.add(newTower);
-//        this.gameMap.getSector(xCoordinate,yCoordinate).occupant.add(newTower);
-//    }
-
     /**
      * Upgrades the given tower and returns an error code in case of an error
      * @param tower that is to be upgraded
@@ -100,6 +85,12 @@ public class Game {
         tower.upgrade();
     }
 
+    /**
+     * Combines two towers
+     * @param baseTower that something is going to be combined with this.
+     * @param combinedTower that is going to be put on the baseTower.
+     * @throws Exception if towers can't be combined.
+     */
     public void combineTowers(Tower baseTower, Tower combinedTower) throws Exception{
         if (baseTower == null || combinedTower == null)
             return;
@@ -134,11 +125,14 @@ public class Game {
     }
 
     private void removeMilitary(Military military){
+        if (military == null)
+            return;
         if (military instanceof Tower)
             towers.remove(military);
         else if (military instanceof Enemy)
             enemies.remove(military);
-        military.getSector().occupant.remove(military);
+        if (military.getSector() != null)
+            military.getSector().occupant.remove(military);
     }
 
     Integer cnt = 0;
@@ -157,6 +151,34 @@ public class Game {
                     timer.cancel();
             }
         },0,350);
+    }
+    public void showTheMap() {
+        for (int i = 1; i <= gameMap.height; i++) {
+            for (int j = 1; j <= gameMap.width; j++) {
+                if (!gameMap.getSector(i,j).occupant.isEmpty()){
+                    if (gameMap.getSector(i,j).occupant.get(0) instanceof Tower)
+                        System.out.print("T");
+                    else
+                        System.out.print("E" + ((Enemy)gameMap.getSector(i,j).occupant.get(0)).getHealth().toString());
+                }
+                else if (gameMap.getSector(i,j).pathIn != null){
+                    System.out.print(".");
+                }
+                else{
+                    System.out.print("-");
+                }
+                System.out.print("     ");
+            }
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println("__________________________________________________________________");
+        System.out.println();
+        System.out.println();
+
     }
 
 }

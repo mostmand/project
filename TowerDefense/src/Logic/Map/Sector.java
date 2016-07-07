@@ -21,7 +21,9 @@ public class Sector {
      * path sectors can only be occupied by enemies
      * and non-path sectors can be occupied by military forces (Towers).
      */
-    public boolean isOccupied;
+    public boolean isOccupied(){
+        return !occupant.isEmpty();
+    }
 
     public boolean endOfPath;
     public int xCoordinate;
