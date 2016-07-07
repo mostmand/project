@@ -29,6 +29,10 @@ public class Sector {
 
     public Path pathIn;
 
+    public boolean inPath(){
+        return pathIn != null;
+    }
+
     private Sector nextSector = null;
 
     public void setNextSector(Sector nextSector) {
