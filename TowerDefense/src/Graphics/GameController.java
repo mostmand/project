@@ -59,7 +59,7 @@ public class GameController implements Initializable {
             e.printStackTrace();
         }
     }
-    
+
     /*
     this method sets the actions related to buttons
     this method is not finalized yet and must be changed
@@ -157,7 +157,9 @@ public class GameController implements Initializable {
                         }
                     }
                 }
-                c.setFill(path);
+                else {
+                    c.setFill(path);
+                }
             }
             else{
                 c.setFill(grass);
