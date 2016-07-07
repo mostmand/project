@@ -54,8 +54,6 @@ public class Attack {
                 slowTower();
         }
 
-//        enemy.setHealth(enemy.getHealth() - damage);
-        System.out.print(attacker.toString() + " " + enemy.toString() + " " + damage);
         enemy.reduceHealth(damage);
 
         switch (attacker.getType()){
