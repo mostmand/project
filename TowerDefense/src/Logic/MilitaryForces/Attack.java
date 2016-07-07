@@ -54,7 +54,9 @@ public class Attack {
                 slowTower();
         }
 
-        enemy.setHealth(enemy.getHealth() - damage);
+//        enemy.setHealth(enemy.getHealth() - damage);
+        System.out.print(attacker.toString() + " " + enemy.toString() + " " + damage);
+        enemy.reduceHealth(damage);
 
         switch (attacker.getType()){
             case FIRE:
@@ -70,20 +72,21 @@ public class Attack {
                 slowEnemy();
                 break;
         }
-
-        switch (attacker.combinedWith){
-            case FIRE:
-                innerFire();
-                break;
-            case TREE:
-                stun();
-                break;
-            case DARK:
-                slowEnemy();
-                break;
-            case LIGHT:
-                splash();
-                break;
+        if (attacker.combinedWith != null){
+            switch (attacker.combinedWith){
+                case FIRE:
+                    innerFire();
+                    break;
+                case TREE:
+                    stun();
+                    break;
+                case DARK:
+                    slowEnemy();
+                    break;
+                case LIGHT:
+                    splash();
+                    break;
+            }
         }
 
     }
