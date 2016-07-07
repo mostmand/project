@@ -50,6 +50,8 @@ public class GameController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try{
             game = new Game();
+//            game.setTower(1, 1, MilitaryType.BASIC);
+//            game.setTower(15, 5, MilitaryType.DARK);
             game.startGame();
             scheduleTimer();
             gridInit();
@@ -117,28 +119,15 @@ public class GameController implements Initializable {
         for (int i = 0; i < gameGrid.getChildren().size(); i ++){
             c = (Cell)gameGrid.getChildren().get(i);
             if(c.getSector().pathIn != null){
-                if(c.getSector().isOccupied()){
-                    for (Military m: c.getSector().occupant) {
-                        if(m instanceof Tower){
-                            c.setFill(tower);
-//                            if(m instanceof BasicTower){
-//
-//                            }
-//                            else if(m instanceof DarkTower){
-//
-//                            }
-//                            else if(m instanceof FireTower){
-//
-//                            }
-//                            else if(m instanceof TreeTower){
-//
-//                            }
-//                            else if(m instanceof LightTower){
-//
-//                            }
-                        }
-                        else if(m instanceof Enemy){
-                            c.setFill(soldier);
+                c.setFill(path);
+            }
+            else {
+                c.setFill(grass);
+            }
+            if(c.getSector().isOccupied()){
+                for (Military m: c.getSector().occupant) {
+                    if(m instanceof Tower){
+                        c.setFill(tower);
 //                            if(m instanceof BasicEnemy){
 //
 //                            }
@@ -153,16 +142,12 @@ public class GameController implements Initializable {
 //                            }
 //                            else if(m instanceof LightEnemy){
 //
-//                            }
-                        }
+//
+                    }
+                    if(m instanceof Enemy){
+                        c.setFill(soldier);
                     }
                 }
-                else {
-                    c.setFill(path);
-                }
-            }
-            else{
-                c.setFill(grass);
             }
         }
     }
