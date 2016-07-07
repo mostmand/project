@@ -1,27 +1,36 @@
 package Graphics;
 
+import Logic.Game;
+import Logic.MilitaryForces.*;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.ImagePattern;
+
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by mostm on 30/06/2016.
  */
 public class GameController implements Initializable {
+    Game game;
+
+    ImagePattern path = new ImagePattern(new Image("/Graphics/images/path.png"));
+    ImagePattern grass = new ImagePattern(new Image("/Graphics/images/grass.png"));
+    ImagePattern soldier = new ImagePattern(new Image("/Graphics/images/soldier.jpg"));
+    ImagePattern tower = new ImagePattern(new Image("/Graphics/images/14955-illustration-of-a-cartoon-castle-tower-with-flag-pv.png"));
+
     @FXML
     private Button pauseButton;
-    @FXML
-    private AnchorPane anchorPane;
     @FXML
     private GridPane gameGrid;
     @FXML
@@ -34,33 +43,125 @@ public class GameController implements Initializable {
     private ImageView fireTower;
 
 
+    /*
+    overridden method for initializing the JavaFX Application
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try{
-            pauseButton.setOnAction(event -> System.out.println("Pause Button was clicked!!!"));
-            basicTower.setOnMouseClicked(event -> System.out.println("Basic Tower Clicked"));
-            lightTower.setOnMouseClicked(event -> System.out.println("Light Tower Clicked"));
-            darkTower.setOnMouseClicked(event -> System.out.println("Dark Tower Clicked"));
-            fireTower.setOnMouseClicked(event -> System.out.println("Fire Tower Clicked"));
+            game = new Game();
+            game.startGame();
+            scheduleTimer();
             gridInit();
-
+            setActions();
         }
         catch (Exception e){
             e.printStackTrace();
         }
     }
+    
+    /*
+    this method sets the actions related to buttons
+    this method is not finalized yet and must be changed
+     */
+    private void setActions() {
+        pauseButton.setOnAction(event ->{
+            game.gameMap.getSector(2, 10).pathIn = null;
+        });
+        basicTower.setOnMouseClicked(event -> System.out.println("Basic Tower Clicked"));
+        lightTower.setOnMouseClicked(event -> System.out.println("Light Tower Clicked"));
+        darkTower.setOnMouseClicked(event -> System.out.println("Dark Tower Clicked"));
+        fireTower.setOnMouseClicked(event -> System.out.println("Fire Tower Clicked"));
 
+        ObservableList<Node> list = gameGrid.getChildren();
+        for (int i = 0; i < list.size(); i ++){
+            Cell cell = (Cell)list.get(i);
+            cell.setOnMouseClicked(event -> System.out.println(cell.getXCoordination() + " " + cell.getYCoordination()));
+        }
+    }
+
+    /*
+    this is a method for scheduling the timer for updating the GUI
+     */
+    private void scheduleTimer() {
+        TimerTask gridUpdate = new TimerTask() {
+            @Override
+            public void run() {
+                gridUpdate();
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(gridUpdate, 0, 300);
+    }
+
+    /*
+    this is for initializing the game gridPane
+     */
     private void gridInit() {
         gameGrid.setVgap(5);
         gameGrid.setHgap(5);
-        Rectangle r;
-        for (int i = 0; i < 100; i ++){
-            for (int j = 0; j < 100; j ++){
-                r = new Rectangle(20, 20);
-                r.setFill(Color.GREEN);
-                gameGrid.add(r, i, j);
+        Cell c;
+        for (int i = 0; i < game.gameMap.width; i ++){
+            for (int j = 0; j < game.gameMap.height; j ++){
+                c = new Cell(40, 40, i, j, game.gameMap.getSector(i + 1, j + 1));
+                gameGrid.add(c, c.getXCoordination(), c.getYCoordination());
             }
-//                gameGrid.setGridLinesVisible(true);
+        }
+    }
+
+    /*
+    the method which updates the GUI
+     */
+    public void gridUpdate(){
+        Cell c;
+        for (int i = 0; i < gameGrid.getChildren().size(); i ++){
+            c = (Cell)gameGrid.getChildren().get(i);
+            if(c.getSector().pathIn != null){
+                if(c.getSector().isOccupied){
+                    for (Military m: c.getSector().occupant) {
+                        if(m instanceof Tower){
+                            c.setFill(tower);
+//                            if(m instanceof BasicTower){
+//
+//                            }
+//                            else if(m instanceof DarkTower){
+//
+//                            }
+//                            else if(m instanceof FireTower){
+//
+//                            }
+//                            else if(m instanceof TreeTower){
+//
+//                            }
+//                            else if(m instanceof LightTower){
+//
+//                            }
+                        }
+                        else if(m instanceof Enemy){
+                            c.setFill(soldier);
+//                            if(m instanceof BasicEnemy){
+//
+//                            }
+//                            else if(m instanceof DarkEnemy){
+//
+//                            }
+//                            else if(m instanceof FireEnemy){
+//
+//                            }
+//                            else if(m instanceof TreeEnemy){
+//
+//                            }
+//                            else if(m instanceof LightEnemy){
+//
+//                            }
+                        }
+                    }
+                }
+                c.setFill(path);
+            }
+            else{
+                c.setFill(grass);
+            }
         }
     }
 }
