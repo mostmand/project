@@ -71,6 +71,21 @@ public class Attack {
                 break;
         }
 
+        switch (attacker.combinedWith){
+            case FIRE:
+                innerFire();
+                break;
+            case TREE:
+                stun();
+                break;
+            case DARK:
+                slowEnemy();
+                break;
+            case LIGHT:
+                splash();
+                break;
+        }
+
     }
 
 
