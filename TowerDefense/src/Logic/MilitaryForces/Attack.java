@@ -31,7 +31,7 @@ public class Attack {
      */
     private int damage;
 
-    public void inflict(){
+    public synchronized void inflict(){
         this.damage = attacker.getPower();
         if (enemy.getType() == attacker.highPerformance){
             this.damage *= 2;
@@ -99,7 +99,7 @@ public class Attack {
         }
     }
     private void death(){
-        if (Math.random() < 1){
+        if (Math.random() < 0.05){
             attacker.alive = false;
         }
     }
