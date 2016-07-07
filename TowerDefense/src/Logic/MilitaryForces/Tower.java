@@ -140,5 +140,24 @@ public abstract class Tower extends Military {
         this.reloadTime += 50;
     }
 
+    public boolean canCombine(Tower tower){
+        return (this.highPerformance != tower.lowPerformance) && (this.lowPerformance != tower.highPerformance);
+    }
+
+    MilitaryType combinedWith = null;
+
+    public void combine(Tower tower){
+        if ((this.highPerformance != tower.lowPerformance) && (this.lowPerformance != tower.highPerformance))
+            return;
+        if (this.highPerformance == tower.lowPerformance){
+            this.highPerformance = null;
+        }
+        else{
+            this.lowPerformance = null;
+        }
+        tower.price = this.price + tower.price;
+        this.combinedWith = tower.type;
+        tower.alive = false;
+    }
 }
 
