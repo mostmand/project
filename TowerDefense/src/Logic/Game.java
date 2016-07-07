@@ -110,6 +110,7 @@ public class Game {
         }
         for (int i = 0; i < enemies.size(); i++) {
             if (!enemies.get(i).isAlive()){
+                player.balance += enemies.get(i).getCost();
                 removeMilitary(enemies.get(i));
                 i--;
                 continue;
@@ -144,14 +145,15 @@ public class Game {
             @Override
             public void run() {
                 for (Path p:gameMap.paths) {
-                    enemies.add(new BasicEnemy(gameMap, p));
+                    enemies.add(new DarkEnemy(gameMap, p));
                 }
                 cnt++;
                 if (cnt >= 5)
                     timer.cancel();
             }
-        },0,350);
+        },0,3000);
     }
+
     public void showTheMap() {
         for (int i = 1; i <= gameMap.height; i++) {
             for (int j = 1; j <= gameMap.width; j++) {

@@ -11,7 +11,7 @@ public class DarkEnemy extends Enemy{
      *  The initial values of the parameters of a Enemy of this type.
      */
 
-    public static final MilitaryType TYPE = MilitaryType.BASIC;
+    public static final MilitaryType TYPE = MilitaryType.DARK;
     public static final Integer INITIAL_PRIZE = 1;
     public static final Integer INITIAL_SPEED = 700;
     public static final Integer INITIAL_HEALTH = 1800;

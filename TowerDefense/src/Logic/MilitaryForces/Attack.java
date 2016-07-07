@@ -99,7 +99,7 @@ public class Attack {
         }
     }
     private void death(){
-        if (Math.random() < 0.05){
+        if (Math.random() < 1){
             attacker.alive = false;
         }
     }
