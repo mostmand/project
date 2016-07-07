@@ -7,13 +7,11 @@ import Logic.Map.Map;
 import Logic.Map.Path;
 import Logic.MilitaryForces.*;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by akhavan on 2016-06-09.
- */
 public class Game {
 
     public Game(){
@@ -57,9 +55,7 @@ public class Game {
      * @throws Exception
      */
     public void setTower(int x, int y, MilitaryType type) throws Exception{
-        int price = 0;
-        if (type == MilitaryType.BASIC)
-            price = BasicTower.INITIAL_PRICE;
+        Integer price = type.initialPrice();
         if (player.balance < price){
             throw new InsufficientBalanceException();
         }
@@ -67,20 +63,25 @@ public class Game {
             throw new InvalidCoordinatesException();
         }
         player.balance -= price;
-        this.makeBasicTower(x, y);
+
+        Constructor c = type.getTowerType().getConstructor(ArrayList.class, Map.class, int.class, int.class);
+        Tower newTower;
+        newTower = (Tower) c.newInstance(this.enemies, gameMap, x, y);
+        towers.add(newTower);
+        this.gameMap.getSector(x,y).occupant.add(newTower);
     }
 
-    /**
-     * Gets coordinates from the UserInterface.
-     * Makes a tower at given coordinates.
-     * @param xCoordinate the X coordinate at which the Tower will be placed
-     * @param yCoordinate the Y coordinate at which the Tower will be placed
-     */
-    private void makeBasicTower(int xCoordinate, int yCoordinate){
-        Tower newTower = new BasicTower(this.enemies, this.gameMap, xCoordinate, yCoordinate);
-        towers.add(newTower);
-        this.gameMap.getSector(xCoordinate,yCoordinate).occupant.add(newTower);
-    }
+//    /**
+//     * Gets coordinates from the UserInterface.
+//     * Makes a tower at given coordinates.
+//     * @param xCoordinate the X coordinate at which the Tower will be placed
+//     * @param yCoordinate the Y coordinate at which the Tower will be placed
+//     */
+//    private void makeBasicTower(int xCoordinate, int yCoordinate){
+//        Tower newTower = new BasicTower(this.enemies, this.gameMap, xCoordinate, yCoordinate);
+//        towers.add(newTower);
+//        this.gameMap.getSector(xCoordinate,yCoordinate).occupant.add(newTower);
+//    }
 
     /**
      * Upgrades the given tower and returns an error code in case of an error
@@ -92,10 +93,10 @@ public class Game {
         if (tower == null) {
             return;
         }
-        if (player.balance < tower.getType().initialPrice){
+        if (player.balance < tower.getType().initialPrice()){
             throw new InsufficientBalanceException();
         }
-        player.balance -= tower.getType().initialPrice/2;
+        player.balance -= tower.getType().initialPrice()/2;
         tower.upgrade();
     }
 
@@ -108,7 +109,6 @@ public class Game {
     }
 
     private void doAttacksAndMoves(){
-
         for (int i = 0; i < towers.size(); i++) {
             if (!towers.get(i).alive){
                 removeMilitary(towers.get(i));
@@ -117,7 +117,6 @@ public class Game {
             }
             towers.get(i).attack();
         }
-
         for (int i = 0; i < enemies.size(); i++) {
             if (!enemies.get(i).isAlive()){
                 removeMilitary(enemies.get(i));
