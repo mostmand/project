@@ -102,7 +102,7 @@ public abstract class Tower extends Military {
      *  calls the hit method with the chosen
      *  MilitaryForces.Military as the parameter
      */
-    protected Enemy findTarget(){
+    protected synchronized Enemy findTarget(){
         Enemy finalTarget = null;
         for (Enemy enemy:this.enemies) {
             if (!inRange(enemy))
