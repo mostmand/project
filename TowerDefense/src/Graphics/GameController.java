@@ -117,7 +117,7 @@ public class GameController implements Initializable {
         for (int i = 0; i < gameGrid.getChildren().size(); i ++){
             c = (Cell)gameGrid.getChildren().get(i);
             if(c.getSector().pathIn != null){
-                if(c.getSector().isOccupied){
+                if(c.getSector().isOccupied()){
                     for (Military m: c.getSector().occupant) {
                         if(m instanceof Tower){
                             c.setFill(tower);
