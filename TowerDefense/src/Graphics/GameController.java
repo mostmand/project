@@ -4,11 +4,13 @@ import Logic.Exceptions.InsufficientBalanceException;
 import Logic.Exceptions.InvalidCoordinatesException;
 import Logic.Game;
 import Logic.MilitaryForces.*;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -45,6 +47,8 @@ public class GameController implements Initializable {
     private ImageView fireTower;
     @FXML
     private ImageView treeTower;
+    @FXML
+    private Label moneyLabel;
 
 
     /*
@@ -55,12 +59,11 @@ public class GameController implements Initializable {
         try{
             game = new Game();
 //            game.setTower(1, 1, MilitaryType.BASIC);
-            game.setTower(15, 5, MilitaryType.DARK);
+//            game.setTower(15, 5, MilitaryType.DARK);
             game.startGame();
             scheduleTimer();
             gridInit();
             setActions();
-
             loadImages();
         }
         catch (Exception e){
@@ -159,6 +162,12 @@ public class GameController implements Initializable {
      */
     public void gridUpdate(){
         Cell c;
+        Platform.runLater(new Runnable() {
+            public void run() {
+                moneyLabel.setText("Your Money:" + game.getPlayerBalance());
+            }
+        });
+
         for (int i = 0; i < gameGrid.getChildren().size(); i ++){
             c = (Cell)gameGrid.getChildren().get(i);
             if(c.getSector().pathIn != null){
