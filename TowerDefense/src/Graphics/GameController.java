@@ -1,5 +1,7 @@
 package Graphics;
 
+import Logic.Exceptions.InsufficientBalanceException;
+import Logic.Exceptions.InvalidCoordinatesException;
 import Logic.Game;
 import Logic.MilitaryForces.*;
 import javafx.collections.ObservableList;
@@ -14,6 +16,7 @@ import javafx.scene.paint.ImagePattern;
 
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,10 +27,9 @@ import java.util.TimerTask;
 public class GameController implements Initializable {
     Game game;
 
-    ImagePattern path = new ImagePattern(new Image("/Graphics/images/path.png"));
-    ImagePattern grass = new ImagePattern(new Image("/Graphics/images/grass.png"));
-    ImagePattern soldier = new ImagePattern(new Image("/Graphics/images/soldier.jpg"));
-    ImagePattern tower = new ImagePattern(new Image("/Graphics/images/14955-illustration-of-a-cartoon-castle-tower-with-flag-pv.png"));
+    HashMap<String, ImagePattern> images;
+
+    MilitaryType tempMilitaryType;
 
     @FXML
     private Button pauseButton;
@@ -41,6 +43,8 @@ public class GameController implements Initializable {
     private ImageView darkTower;
     @FXML
     private ImageView fireTower;
+    @FXML
+    private ImageView treeTower;
 
 
     /*
@@ -56,10 +60,33 @@ public class GameController implements Initializable {
             scheduleTimer();
             gridInit();
             setActions();
+
+            loadImages();
         }
         catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    /*
+    this method loads the images to a HashMap
+     */
+    private void loadImages() {
+        images = new HashMap<String, ImagePattern>();
+        images.put("treeTower", new ImagePattern(new Image("Graphics/Images/treeTower.jpg")));
+        images.put("lightTower", new ImagePattern(new Image("Graphics/Images/lightTower.png")));
+        images.put("darkTower", new ImagePattern(new Image("Graphics/Images/darkTower.jpg")));
+        images.put("basicTower", new ImagePattern(new Image("Graphics/Images/basicTower.jpg")));
+        images.put("fireTower", new ImagePattern(new Image("Graphics/Images/fireTower.jpg")));
+
+        images.put("treeEnemy", new ImagePattern(new Image("Graphics/Images/treeEnemy.jpg")));
+        images.put("lightEnemy", new ImagePattern(new Image("Graphics/Images/lightEnemy.jpg")));
+        images.put("darkEnemy", new ImagePattern(new Image("Graphics/Images/darkEnemy.jpg")));
+        images.put("basicEnemy", new ImagePattern(new Image("Graphics/Images/basicEnemy.jpg")));
+        images.put("fireEnemy", new ImagePattern(new Image("Graphics/Images/fireEnemy.jpg")));
+
+        images.put("grass", new ImagePattern(new Image("Graphics/Images/grass.png")));
+        images.put("path", new ImagePattern(new Image("Graphics/Images/path.png")));
     }
 
     /*
@@ -70,15 +97,31 @@ public class GameController implements Initializable {
         pauseButton.setOnAction(event ->{
             game.gameMap.getSector(2, 10).pathIn = null;
         });
-        basicTower.setOnMouseClicked(event -> System.out.println("Basic Tower Clicked"));
-        lightTower.setOnMouseClicked(event -> System.out.println("Light Tower Clicked"));
-        darkTower.setOnMouseClicked(event -> System.out.println("Dark Tower Clicked"));
-        fireTower.setOnMouseClicked(event -> System.out.println("Fire Tower Clicked"));
+        basicTower.setOnMouseClicked(event -> tempMilitaryType = MilitaryType.BASIC);
+        lightTower.setOnMouseClicked(event -> tempMilitaryType = MilitaryType.LIGHT);
+        darkTower.setOnMouseClicked(event -> tempMilitaryType = MilitaryType.DARK);
+        fireTower.setOnMouseClicked(event -> tempMilitaryType = MilitaryType.FIRE);
+        treeTower.setOnMouseClicked(event -> tempMilitaryType = MilitaryType.TREE);
 
         ObservableList<Node> list = gameGrid.getChildren();
         for (int i = 0; i < list.size(); i ++){
-            Cell cell = (Cell)list.get(i);
-            cell.setOnMouseClicked(event -> System.out.println(cell.getXCoordination() + " " + cell.getYCoordination()));
+                Cell cell = (Cell)list.get(i);
+                cell.setOnMouseClicked(event -> {
+                    try {
+                        if(tempMilitaryType != null)
+                            game.setTower(cell.getXCoordination() + 1, cell.getYCoordination() + 1, tempMilitaryType);
+                        tempMilitaryType = null;
+                    }
+                    catch (InsufficientBalanceException e){
+                        System.out.println("Your Balance is insufficient");
+                    }
+                    catch (InvalidCoordinatesException e){
+                        System.out.println("You cannot put your tower here");
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                });
         }
     }
 
@@ -119,33 +162,46 @@ public class GameController implements Initializable {
         for (int i = 0; i < gameGrid.getChildren().size(); i ++){
             c = (Cell)gameGrid.getChildren().get(i);
             if(c.getSector().pathIn != null){
-                c.setFill(path);
+                c.setFill(images.get("path"));
             }
             else {
-                c.setFill(grass);
+                c.setFill(images.get("grass"));
             }
             if(c.getSector().isOccupied()){
                 for (Military m: c.getSector().occupant) {
                     if(m instanceof Tower){
-                        c.setFill(tower);
-//                            if(m instanceof BasicEnemy){
-//
-//                            }
-//                            else if(m instanceof DarkEnemy){
-//
-//                            }
-//                            else if(m instanceof FireEnemy){
-//
-//                            }
-//                            else if(m instanceof TreeEnemy){
-//
-//                            }
-//                            else if(m instanceof LightEnemy){
-//
-//
+                            if(m instanceof BasicTower){
+                                c.setFill(images.get("basicTower"));
+                            }
+                            else if(m instanceof DarkTower){
+                                c.setFill(images.get("darkTower"));
+                            }
+                            else if(m instanceof FireTower){
+                                c.setFill(images.get("fireTower"));
+                            }
+                            else if(m instanceof TreeTower){
+                                c.setFill(images.get("treeTower"));
+                            }
+                            else if(m instanceof LightTower){
+                                c.setFill(images.get("lightTower"));
+                            }
                     }
                     if(m instanceof Enemy){
-                        c.setFill(soldier);
+                        if(m instanceof BasicEnemy){
+                            c.setFill(images.get("basicEnemy"));
+                        }
+                        else if(m instanceof DarkEnemy){
+                            c.setFill(images.get("darkEnemy"));
+                        }
+                        else if(m instanceof FireEnemy){
+                            c.setFill(images.get("fireEnemy"));
+                        }
+                        else if(m instanceof TreeEnemy){
+                            c.setFill(images.get("treeEnemy"));
+                        }
+                        else if(m instanceof LightEnemy){
+                            c.setFill(images.get("lightEnemy"));
+                        }
                     }
                 }
             }
