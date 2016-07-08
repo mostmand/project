@@ -44,4 +44,22 @@ public enum MilitaryType {
         return 0;
     }
 
+    @NotNull
+    public Class<?> getEnemyType(){
+        switch (this){
+            case BASIC:
+                return BasicEnemy.class;
+            case FIRE:
+                return FireEnemy.class;
+            case TREE:
+                return TreeEnemy.class;
+            case LIGHT:
+                return LightEnemy.class;
+            case DARK:
+                return DarkEnemy.class;
+        }
+        return null;
+    }
+
+
 }

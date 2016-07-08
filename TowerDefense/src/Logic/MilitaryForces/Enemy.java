@@ -1,5 +1,6 @@
 package Logic.MilitaryForces;
 
+import Logic.Game;
 import Logic.Map.Map;
 import Logic.Map.Path;
 import Logic.Map.Sector;
@@ -94,7 +95,7 @@ public abstract class Enemy extends Military {
     public boolean stunned = false;
 
     private boolean canMove(){
-        return System.currentTimeMillis() >= timeOfLastMovement + this.getSpeed() &&  !stunned;
+        return Game.gameTime.getTime() >= timeOfLastMovement + this.getSpeed() && !stunned;
     }
 
     /**
@@ -117,7 +118,7 @@ public abstract class Enemy extends Military {
         if (sector.getNextSector() != null)
             sector.getNextSector().occupant.add(this);
         this.setSector(sector.getNextSector());
-        timeOfLastMovement = System.currentTimeMillis();
+        timeOfLastMovement = Game.gameTime.getTime();
     }
 
     /**

@@ -1,8 +1,12 @@
 package Logic.MilitaryForces;
 
+import Logic.Exceptions.AlreadyCombinedException;
+import Logic.Game;
 import Logic.Map.Map;
 import Logic.Map.Sector;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 /**
@@ -86,7 +90,7 @@ public abstract class Tower extends Military {
      * @return true if the tower can shoot
      */
     public boolean canShoot() {
-        return System.currentTimeMillis() >= timeOfLastAttack + this.getReloadTime() && this.alive;
+        return Game.gameTime.getTime() >= timeOfLastAttack + this.getReloadTime() && this.alive;
     }
 
 
@@ -104,14 +108,16 @@ public abstract class Tower extends Military {
      */
     protected synchronized Enemy findTarget(){
         Enemy finalTarget = null;
-        for (Enemy enemy:this.enemies) {
-            if (!inRange(enemy))
-                continue;
-            if (        finalTarget == null
-                    ||  enemy.getHealth() < finalTarget.getHealth()
-                    ||  (enemy.getHealth().equals(finalTarget.getHealth()) && enemy.distanceToCastle() < finalTarget.distanceToCastle()))
-            {
-                finalTarget = enemy;
+        synchronized (this.enemies){
+            for (Enemy enemy:this.enemies) {
+                if (!inRange(enemy))
+                    continue;
+                if (        finalTarget == null
+                        ||  enemy.getHealth() < finalTarget.getHealth()
+                        ||  (enemy.getHealth().equals(finalTarget.getHealth()) && enemy.distanceToCastle() < finalTarget.distanceToCastle()))
+                {
+                    finalTarget = enemy;
+                }
             }
         }
         return finalTarget;
@@ -124,7 +130,7 @@ public abstract class Tower extends Military {
         if (enemy == null)
             return;
         new Attack(this, enemy);
-        this.timeOfLastAttack = System.currentTimeMillis();
+        this.timeOfLastAttack = Game.gameTime.getTime();
     }
 
     public MilitaryType highPerformance = null;
@@ -144,6 +150,24 @@ public abstract class Tower extends Military {
         return (this.highPerformance != tower.lowPerformance) && (this.lowPerformance != tower.highPerformance);
     }
 
+    public boolean canCombine(MilitaryType type){
+        Constructor c;
+        Tower newTower = null;
+        try {
+            c = type.getTowerType().getConstructor(ArrayList.class, Map.class, int.class, int.class);
+            newTower = (Tower) c.newInstance(null, null, null, null);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }  catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return canCombine(newTower);
+    }
+
     MilitaryType combinedWith = null;
 
     public void combine(Tower tower){
@@ -158,6 +182,26 @@ public abstract class Tower extends Military {
         tower.price = this.price + tower.price;
         this.combinedWith = tower.type;
         tower.alive = false;
+    }
+
+    public void combine(MilitaryType type) throws AlreadyCombinedException {
+        if (combinedWith != null)
+            throw new AlreadyCombinedException();
+        Constructor c;
+        Tower newTower = null;
+        try {
+            c = type.getTowerType().getConstructor(ArrayList.class, Map.class, int.class, int.class);
+            newTower = (Tower) c.newInstance(null, null, null, null);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        this.combine(newTower);
     }
 }
 
