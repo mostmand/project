@@ -1,5 +1,6 @@
 package Logic.MilitaryForces;
 
+import Logic.Game;
 import Logic.Map.Map;
 import Logic.Map.Sector;
 
@@ -86,7 +87,7 @@ public abstract class Tower extends Military {
      * @return true if the tower can shoot
      */
     public boolean canShoot() {
-        return System.currentTimeMillis() >= timeOfLastAttack + this.getReloadTime() && this.alive;
+        return Game.gameTime.getTime() >= timeOfLastAttack + this.getReloadTime() && this.alive;
     }
 
 
@@ -124,7 +125,7 @@ public abstract class Tower extends Military {
         if (enemy == null)
             return;
         new Attack(this, enemy);
-        this.timeOfLastAttack = System.currentTimeMillis();
+        this.timeOfLastAttack = Game.gameTime.getTime();
     }
 
     public MilitaryType highPerformance = null;
