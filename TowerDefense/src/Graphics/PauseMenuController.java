@@ -61,7 +61,10 @@ public class PauseMenuController implements Initializable {
                 gameController.setStage(stage);
                 gameScene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
                 stage.setScene(gameScene);
+                gameController.game = game;
                 gameController.gridInit();
+                gameController.setActions();
+                gameController.scheduleTimer();
                 game.startGame();
                 stage.show();
             }

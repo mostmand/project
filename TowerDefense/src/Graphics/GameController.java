@@ -40,6 +40,8 @@ public class GameController implements Initializable {
     MilitaryType tempMilitaryType;
 
     @FXML
+    private AnchorPane anchorPane;
+    @FXML
     private Button pauseButton;
     @FXML
     private GridPane gameGrid;
