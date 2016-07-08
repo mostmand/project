@@ -35,12 +35,54 @@ public class Game {
      * Consists of a timer that does all the stuff
      * that needs to be done every period.
      */
-    Timer thisTimer;
+
+
+    int level = 0;
+
+    private boolean readyForNextLevel(){
+        if (level < 5 && enemies.isEmpty()){
+            level++;
+            return true;
+        }
+        return false;
+    }
+
+    private MilitaryType getTypeForLevel(){
+        switch (level){
+            case 1:
+                return MilitaryType.BASIC;
+            case 2:
+                return MilitaryType.FIRE;
+            case 3:
+                return MilitaryType.TREE;
+            case 4:
+                return MilitaryType.LIGHT;
+            case 5:
+                return MilitaryType.DARK;
+            default:
+                return MilitaryType.BASIC;
+        }
+    }
+
+    Timer timerForMovingEnemiesAndMakingTowersAttack;
+    Timer timerForSendingInWaves;
+
     public void startGame(){
         gameTime.startTime();
-        sendInEnemyWaveOf(MilitaryType.LIGHT);
-        thisTimer = new Timer();
-        thisTimer.schedule(new TimerTask() {
+
+        timerForSendingInWaves = new Timer();
+        timerForSendingInWaves.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (readyForNextLevel()){
+                    sendInEnemyWaveOf(getTypeForLevel());
+                }
+            }
+        }, 0, 100);
+
+
+        timerForMovingEnemiesAndMakingTowersAttack = new Timer();
+        timerForMovingEnemiesAndMakingTowersAttack.schedule(new TimerTask() {
             @Override
             public void run() {
                 doAttacksAndMoves();
@@ -50,7 +92,7 @@ public class Game {
 
     public void pauseGame(){
         gameTime.pauseTime();
-        thisTimer.cancel();
+        timerForMovingEnemiesAndMakingTowersAttack.cancel();
     }
 
     /**
@@ -135,11 +177,8 @@ public class Game {
         baseTower.combine(combinedTower);
     }
 
-    public void modifyTower(MilitaryType type, int xCoordinate, int yCoordinate) throws Exception {
 
-    }
-
-    private void doAttacksAndMoves(){
+    private synchronized void doAttacksAndMoves(){
         for (int i = 0; i < towers.size(); i++) {
             if (!towers.get(i).alive){
                 removeMilitary(towers.get(i));
@@ -149,19 +188,21 @@ public class Game {
             towers.get(i).attack();
         }
         for (int i = 0; i < enemies.size(); i++) {
-            if (!enemies.get(i).isAlive()){
+            if (enemies.get(i)!= null && !enemies.get(i).isAlive()){
                 player.balance += enemies.get(i).getCost();
                 removeMilitary(enemies.get(i));
                 i--;
                 continue;
             }
-            if (enemies.get(i).getSector() == null){
+            if (enemies.get(i)!= null && enemies.get(i).getSector() == null){
                 player.castleHealth--;
                 removeMilitary(enemies.get(i));
                 i--;
                 continue;
             }
-            enemies.get(i).move();
+            if (enemies.get(i) != null){
+                enemies.get(i).move();
+            }
         }
     }
 
@@ -206,20 +247,25 @@ public class Game {
             return cnt > 5;
         }
 
+        long lastEntry = 0;
+
         @Override
-        public void run() {
+        public synchronized void run() {
             if (finished()){
                 timer.cancel();
                 return;
             }
-            for (Path p:gameMap.paths) {
-                try {
-                    enemies.add((Enemy) c.newInstance(gameMap, p));
-                } catch (Exception e) {
-                    e.printStackTrace();
+            if (Game.gameTime.getTime() - lastEntry > 3000){
+                for (Path p:gameMap.paths) {
+                    try {
+                        enemies.add((Enemy) c.newInstance(gameMap, p));
+                    } catch (Exception e) {
+//                        e.printStackTrace();
+                    }
                 }
+                cnt++;
+                lastEntry = Game.gameTime.getTime();
             }
-            cnt++;
         }
 
     }
@@ -232,37 +278,9 @@ public class Game {
 
     private void sendInEnemyWaveOf(MilitaryType type){
         Timer timer = new Timer();
-        SendInWave task = new SendInWave(timer);
-        timer.schedule(task, 0, 3000);
+        SendInWave task = new SendInWave(timer, type);
+        timer.schedule(task, 0, 10);
     }
 
-    public void showTheMap() {
-        for (int i = 1; i <= gameMap.height; i++) {
-            for (int j = 1; j <= gameMap.width; j++) {
-                if (!gameMap.getSector(i,j).occupant.isEmpty()){
-                    if (gameMap.getSector(i,j).occupant.get(0) instanceof Tower)
-                        System.out.print("T");
-                    else
-                        System.out.print("E" + ((Enemy)gameMap.getSector(i,j).occupant.get(0)).getHealth().toString());
-                }
-                else if (gameMap.getSector(i,j).pathIn != null){
-                    System.out.print(".");
-                }
-                else{
-                    System.out.print("-");
-                }
-                System.out.print("     ");
-            }
-            System.out.println();
-            System.out.println();
-            System.out.println();
-            System.out.println();
-        }
-        System.out.println();
-        System.out.println("__________________________________________________________________");
-        System.out.println();
-        System.out.println();
-
-    }
 
 }

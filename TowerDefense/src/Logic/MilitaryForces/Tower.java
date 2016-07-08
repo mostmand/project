@@ -108,8 +108,25 @@ public abstract class Tower extends Military {
      */
     protected synchronized Enemy findTarget(){
         Enemy finalTarget = null;
-        synchronized (this.enemies){
-            for (Enemy enemy:this.enemies) {
+//        Iterator iterator = this.enemies.iterator();
+//        while (iterator.hasNext()){
+//            Enemy enemy = (Enemy) iterator.next();
+//            if (!inRange(enemy))
+//                continue;
+//            if (        finalTarget == null
+//                    ||  enemy.getHealth() < finalTarget.getHealth()
+//                    ||  (enemy.getHealth().equals(finalTarget.getHealth()) && enemy.distanceToCastle() < finalTarget.distanceToCastle()))
+//            {
+//                finalTarget = enemy;
+//            }
+//        }
+        for (int i = 0; i < this.enemies.size(); i++) {
+            Enemy enemy = this.enemies.get(i);
+            if(enemy == null){
+//                System.out.println(i + " " + enemies.size());
+                continue;
+            }
+            synchronized (enemy){
                 if (!inRange(enemy))
                     continue;
                 if (        finalTarget == null
