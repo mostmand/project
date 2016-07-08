@@ -36,7 +36,7 @@ public class LightTower extends Tower {
      * @param xCoordinate of the tower. one based
      * @param yCoordinate of the tower. one based
      */
-    public LightTower(ArrayList<Enemy> enemies, Map gameMap, int xCoordinate, int yCoordinate) {
+    public LightTower(ArrayList<Enemy> enemies, Map gameMap, Integer xCoordinate, Integer yCoordinate) {
         super(enemies, gameMap, xCoordinate, yCoordinate);
     }
 

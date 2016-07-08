@@ -85,6 +85,9 @@ public class Game {
         timerForMovingEnemiesAndMakingTowersAttack.schedule(new TimerTask() {
             @Override
             public void run() {
+                while(enemies.contains(null)){
+                    enemies.remove(null);
+                }
                 doAttacksAndMoves();
             }
         },0,1);
@@ -103,9 +106,6 @@ public class Game {
 
     public void setTower(int xCoordinate, int yCoordinate, MilitaryType type) throws Exception {
         Sector s = gameMap.getSector(xCoordinate, yCoordinate);
-        if (s.occupant.isEmpty()){
-            makeTower(xCoordinate, yCoordinate, type);
-        }
         if (!s.occupant.isEmpty() && s.occupant.get(0) instanceof Tower){
             Tower t = (Tower) s.occupant.get(0);
             if (t.getType() == type){
@@ -117,6 +117,7 @@ public class Game {
                 t.combine(type);
             }
         }
+        makeTower(xCoordinate, yCoordinate, type);
     }
 
     /**
@@ -137,7 +138,7 @@ public class Game {
         player.balance -= price;
 
         Constructor c;
-        c = type.getTowerType().getConstructor(ArrayList.class, Map.class, int.class, int.class);
+        c = type.getTowerType().getConstructor(ArrayList.class, Map.class, Integer.class, Integer.class);
         Tower newTower;
         newTower = (Tower) c.newInstance(this.enemies, gameMap, x, y);
         towers.add(newTower);
@@ -258,7 +259,10 @@ public class Game {
             if (Game.gameTime.getTime() - lastEntry > 3000){
                 for (Path p:gameMap.paths) {
                     try {
-                        enemies.add((Enemy) c.newInstance(gameMap, p));
+                        Enemy e = (Enemy) c.newInstance(gameMap, p);
+                        if (e == null)
+                            System.out.println("Here");
+                        enemies.add(e);
                     } catch (Exception e) {
 //                        e.printStackTrace();
                     }
@@ -282,5 +286,9 @@ public class Game {
         timer.schedule(task, 0, 10);
     }
 
+
+    public boolean endOfGame(){
+        return player.castleHealth <= 0 || level > 5;
+    }
 
 }

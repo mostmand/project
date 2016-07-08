@@ -34,6 +34,7 @@ public class Controller{
     @FXML
     public void initialize() {
         game = new Game();
+        game.startGame();
 //        game.setTower(2,3, MilitaryType.BASIC);
 
         map.getColumnConstraints().remove(0);
@@ -101,6 +102,7 @@ public class Controller{
     Button renderButton;
 
     public void renderMilitary(){
+        System.out.println(game.enemies.size());
         for (int i = 0; i < map.getRowConstraints().size(); i++) {
             for (int j = 0; j < map.getColumnConstraints().size(); j++) {
                 Sector sector = game.gameMap.getSector(i+1, j+1);

@@ -20,7 +20,7 @@ public abstract class Tower extends Military {
      * temporary default constructor
      */
 
-    public Tower(ArrayList<Enemy> enemies, Map gameMap, int xCoordinate, int yCoordinate){
+    public Tower(ArrayList<Enemy> enemies, Map gameMap, Integer xCoordinate, Integer yCoordinate){
         super(gameMap, xCoordinate, yCoordinate);
         this.enemies = enemies;
     }
@@ -108,32 +108,22 @@ public abstract class Tower extends Military {
      */
     protected synchronized Enemy findTarget(){
         Enemy finalTarget = null;
-//        Iterator iterator = this.enemies.iterator();
-//        while (iterator.hasNext()){
-//            Enemy enemy = (Enemy) iterator.next();
-//            if (!inRange(enemy))
-//                continue;
-//            if (        finalTarget == null
-//                    ||  enemy.getHealth() < finalTarget.getHealth()
-//                    ||  (enemy.getHealth().equals(finalTarget.getHealth()) && enemy.distanceToCastle() < finalTarget.distanceToCastle()))
-//            {
-//                finalTarget = enemy;
-//            }
-//        }
-        for (int i = 0; i < this.enemies.size(); i++) {
-            Enemy enemy = this.enemies.get(i);
-            if(enemy == null){
+        synchronized (enemies){
+            for (int i = 0; i < this.enemies.size(); i++) {
+                Enemy enemy = this.enemies.get(i);
+                if(enemy == null){
 //                System.out.println(i + " " + enemies.size());
-                continue;
-            }
-            synchronized (enemy){
-                if (!inRange(enemy))
                     continue;
-                if (        finalTarget == null
-                        ||  enemy.getHealth() < finalTarget.getHealth()
-                        ||  (enemy.getHealth().equals(finalTarget.getHealth()) && enemy.distanceToCastle() < finalTarget.distanceToCastle()))
-                {
-                    finalTarget = enemy;
+                }
+                synchronized (enemy){
+                    if (!inRange(enemy))
+                        continue;
+                    if (        finalTarget == null
+                            ||  enemy.getHealth() < finalTarget.getHealth()
+                            ||  (enemy.getHealth().equals(finalTarget.getHealth()) && enemy.distanceToCastle() < finalTarget.distanceToCastle()))
+                    {
+                        finalTarget = enemy;
+                    }
                 }
             }
         }
@@ -171,7 +161,7 @@ public abstract class Tower extends Military {
         Constructor c;
         Tower newTower = null;
         try {
-            c = type.getTowerType().getConstructor(ArrayList.class, Map.class, int.class, int.class);
+            c = type.getTowerType().getConstructor(ArrayList.class, Map.class, Integer.class, Integer.class);
             newTower = (Tower) c.newInstance(null, null, null, null);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -207,7 +197,7 @@ public abstract class Tower extends Military {
         Constructor c;
         Tower newTower = null;
         try {
-            c = type.getTowerType().getConstructor(ArrayList.class, Map.class, int.class, int.class);
+            c = type.getTowerType().getConstructor(ArrayList.class, Map.class, Integer.class, Integer.class);
             newTower = (Tower) c.newInstance(null, null, null, null);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();

@@ -30,7 +30,7 @@ public class FireTower extends Tower{
         this.lowPerformance = LOW_PERFORMANCE;
     }
 
-    public FireTower(ArrayList<Enemy> enemies, Map gameMap, int xCoordinate, int yCoordinate){
+    public FireTower(ArrayList<Enemy> enemies, Map gameMap, Integer xCoordinate, Integer yCoordinate){
         super(enemies, gameMap, xCoordinate, yCoordinate);
     }
 

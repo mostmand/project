@@ -32,7 +32,7 @@ public class BasicTower extends Tower{
      * @param xCoordinate of the tower. one based
      * @param yCoordinate of the tower. one based
      */
-    public BasicTower(ArrayList<Enemy> enemies, Map gameMap, int xCoordinate, int yCoordinate) {
+    public BasicTower(ArrayList<Enemy> enemies, Map gameMap, Integer xCoordinate, Integer yCoordinate) {
         super(enemies, gameMap, xCoordinate, yCoordinate);
     }
 

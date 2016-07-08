@@ -135,6 +135,9 @@ public class Attack {
                 if (i == 0 && j == 0)
                     continue;
                 Sector s = enemy.gameMap.getSectorAt(enemy.getSector(), i,j);
+                if (s == null){
+                    continue;
+                }
                 for (Military m:s.occupant) {
                     if (!(m instanceof Enemy))
                         continue;

@@ -35,7 +35,7 @@ public class DarkTower extends Tower{
      * @param xCoordinate of the tower. one based
      * @param yCoordinate of the tower. one based
      */
-    public DarkTower(ArrayList<Enemy> enemies, Map gameMap, int xCoordinate, int yCoordinate) {
+    public DarkTower(ArrayList<Enemy> enemies, Map gameMap, Integer xCoordinate, Integer yCoordinate) {
         super(enemies, gameMap, xCoordinate, yCoordinate);
     }
 

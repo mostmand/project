@@ -29,7 +29,7 @@ public class TreeTower extends Tower{
         this.lowPerformance = LOW_PERFORMANCE;
     }
 
-    public TreeTower(ArrayList<Enemy> enemies, Map gameMap, int xCoordinate, int yCoordinate){
+    public TreeTower(ArrayList<Enemy> enemies, Map gameMap, Integer xCoordinate, Integer yCoordinate){
         super(enemies, gameMap, xCoordinate, yCoordinate);
     }
 
