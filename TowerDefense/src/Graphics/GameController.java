@@ -57,6 +57,8 @@ public class GameController implements Initializable {
     private ImageView treeTower;
     @FXML
     private Label moneyLabel;
+    @FXML
+    private Label messages;
 
 
     public void setStage(Stage stage){
@@ -137,16 +139,43 @@ public class GameController implements Initializable {
                         tempMilitaryType = null;
                     }
                     catch (InsufficientBalanceException e){
-                        System.out.println("Your Balance is insufficient");
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                messages.setText("You don't have enough money!");
+                            }
+                        });
+                        clearMessages();
                     }
                     catch (InvalidCoordinatesException e){
-                        System.out.println("You cannot put your tower here");
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                messages.setText("You cannot put your tower here!");
+                            }
+                        });
+                        clearMessages();
                     }
                     catch (Exception e){
                         e.printStackTrace();
                     }
                 });
         }
+    }
+
+    private void clearMessages() {
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        messages.setText("");
+                    }
+                });
+
+            }
+        },2000);
     }
 
     /*

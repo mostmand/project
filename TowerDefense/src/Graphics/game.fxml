@@ -9,8 +9,9 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Graphics.GameController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Graphics.GameController">
    <children>
       <Button fx:id="pauseButton" focusTraversable="false" layoutX="992.0" layoutY="39.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="112.0" text="Pause" />
       <ImageView fx:id="basicTower" fitHeight="164.0" fitWidth="109.0" layoutX="929.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
@@ -53,5 +54,10 @@
          </image>
       </ImageView>
       <Label fx:id="moneyLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="911.0" layoutY="535.0" prefHeight="21.0" prefWidth="269.0" text="Your Money:" />
+      <Label fx:id="messages" alignment="CENTER" contentDisplay="CENTER" layoutX="901.0" layoutY="582.0" prefHeight="51.0" prefWidth="286.0" textFill="#e40a0a">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
