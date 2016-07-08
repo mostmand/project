@@ -218,7 +218,16 @@ public class GameController implements Initializable {
                 moneyLabel.setText("Your Money:" + game.getPlayerBalance());
             }
         });
+        if(game.endOfGame()){
+            game.pauseGame();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    messages.setText("GAME OVER!!!");
+                }
+            });
 
+        }
         for (int i = 0; i < gameGrid.getChildren().size(); i ++){
             c = (Cell)gameGrid.getChildren().get(i);
             if(c.getSector().pathIn != null){
