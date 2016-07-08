@@ -22,7 +22,6 @@ public class Map {
                 this.sectors[i][j] = new Sector(i+1, j+1);
             }
         }
-//        this.castle = new Sector(null, null);
         this.configureMap();
     }
 
@@ -31,7 +30,6 @@ public class Map {
     public Integer width;
 
     private Sector[][] sectors;
-//    Sector castle;
 
     public Sector getSector(Integer x, Integer y){
         if (x == null || y == null)
