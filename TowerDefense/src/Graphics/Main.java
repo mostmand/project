@@ -20,18 +20,24 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage){
         try {
-//            GameController controller = new GameController();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("/Graphics/game.fxml"));
-//            loader.setController(Graphics.GameController.class);
-            AnchorPane anchorPane = loader.load();
-            anchorPane.setId("anchorPane");
-            Scene scene = new Scene(anchorPane);
-            scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
-            primaryStage.setScene(scene);
+//            GameController gameController = new GameController();
+
+
+            FXMLLoader mainMenuLoader = new FXMLLoader();
+            mainMenuLoader.setLocation(Main.class.getResource("/Graphics/mainMenu.fxml"));
+            AnchorPane mainMenu = mainMenuLoader.load();
+            MainMenuController mainMenuController = (MainMenuController)mainMenuLoader.getController();
+            mainMenuController.setStage(primaryStage);
+
+            Scene mainMenuScene = new Scene(mainMenu);
+            mainMenuScene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
+            primaryStage.setScene(mainMenuScene);
+
+
             primaryStage.setResizable(false);
             primaryStage.setTitle("Tower Defense");
             primaryStage.show();
+
         }
         catch (Exception e){
             e.printStackTrace();
