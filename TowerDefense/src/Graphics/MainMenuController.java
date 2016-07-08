@@ -17,6 +17,10 @@ import java.util.ResourceBundle;
 /**
  * Created by mostm on 08/07/2016.
  */
+
+/**
+ * this is the controller class for our main menu
+ */
 public class MainMenuController implements Initializable {
 
     Stage stage;

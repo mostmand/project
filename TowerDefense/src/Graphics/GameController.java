@@ -60,7 +60,10 @@ public class GameController implements Initializable {
     @FXML
     private Label messages;
 
-
+    /**
+     * this method is for setting the stage when we want to switch between menus
+     * @param stage
+     */
     public void setStage(Stage stage){
         this.stage = stage;
     }

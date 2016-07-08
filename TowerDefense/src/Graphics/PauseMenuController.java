@@ -16,6 +16,10 @@ import java.util.ResourceBundle;
 /**
  * Created by mostm on 08/07/2016.
  */
+
+/**
+ * this is the controller class for the pause menu
+ */
 public class PauseMenuController implements Initializable {
     private Stage stage;
     private Game game;

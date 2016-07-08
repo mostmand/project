@@ -10,6 +10,10 @@ import javafx.scene.shape.Rectangle;
 /**
  * Created by mostm on 07/07/2016.
  */
+
+/**
+ * these are the cells of our map in the game which show the enemies, towers, path, etc.
+ */
 public class Cell extends Rectangle {
     private int x;
     private int y;
