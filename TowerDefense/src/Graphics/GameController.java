@@ -7,16 +7,20 @@ import Logic.MilitaryForces.*;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
+import javafx.stage.Stage;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -27,7 +31,9 @@ import java.util.TimerTask;
  * Created by mostm on 30/06/2016.
  */
 public class GameController implements Initializable {
-    Game game;
+    public Game game;
+    private Stage stage;
+    TimerTask gridUpdate;
 
     HashMap<String, ImagePattern> images;
 
@@ -51,18 +57,16 @@ public class GameController implements Initializable {
     private Label moneyLabel;
 
 
+    public void setStage(Stage stage){
+        this.stage = stage;
+    }
+
     /*
     overridden method for initializing the JavaFX Application
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try{
-            game = new Game();
-//            game.setTower(1, 1, MilitaryType.BASIC);
-//            game.setTower(15, 5, MilitaryType.DARK);
-            game.startGame();
-            scheduleTimer();
-            gridInit();
             setActions();
             loadImages();
         }
@@ -96,9 +100,24 @@ public class GameController implements Initializable {
     this method sets the actions related to buttons
     this method is not finalized yet and must be changed
      */
-    private void setActions() {
+    public void setActions() {
         pauseButton.setOnAction(event ->{
-            game.gameMap.getSector(2, 10).pathIn = null;
+            FXMLLoader pauseMenuLoader = new FXMLLoader();
+            pauseMenuLoader.setLocation(Main.class.getResource("/Graphics/pauseMenu.fxml"));
+            try {
+                game.pauseGame();
+                AnchorPane pauseMenu = pauseMenuLoader.load();
+                Scene pauseMenuScene = new Scene(pauseMenu);
+                PauseMenuController pauseMenuController = (PauseMenuController)pauseMenuLoader.getController();
+                pauseMenuScene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
+                pauseMenuController.setStage(stage);
+                pauseMenuController.setGame(game);
+                stage.setScene(pauseMenuScene);
+                stage.show();
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
         });
         basicTower.setOnMouseClicked(event -> tempMilitaryType = MilitaryType.BASIC);
         lightTower.setOnMouseClicked(event -> tempMilitaryType = MilitaryType.LIGHT);
@@ -131,8 +150,8 @@ public class GameController implements Initializable {
     /*
     this is a method for scheduling the timer for updating the GUI
      */
-    private void scheduleTimer() {
-        TimerTask gridUpdate = new TimerTask() {
+    public void scheduleTimer() {
+        gridUpdate = new TimerTask() {
             @Override
             public void run() {
                 gridUpdate();
@@ -145,7 +164,7 @@ public class GameController implements Initializable {
     /*
     this is for initializing the game gridPane
      */
-    private void gridInit() {
+    public void gridInit() {
         gameGrid.setVgap(5);
         gameGrid.setHgap(5);
         Cell c;
@@ -162,6 +181,7 @@ public class GameController implements Initializable {
      */
     public void gridUpdate(){
         Cell c;
+        //the code inside the run later is for updating player's money shown in the moneyLabel
         Platform.runLater(new Runnable() {
             public void run() {
                 moneyLabel.setText("Your Money:" + game.getPlayerBalance());
