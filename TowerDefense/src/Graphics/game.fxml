@@ -9,27 +9,27 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Graphics.GameController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Graphics.GameController">
    <children>
-      <Button fx:id="pauseButton" focusTraversable="false" layoutX="947.0" layoutY="95.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="112.0" text="Pause" />
-      <ImageView fx:id="basicTower" fitHeight="124.0" fitWidth="50.0" layoutX="950.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="pauseButton" focusTraversable="false" layoutX="992.0" layoutY="39.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="112.0" text="Pause" />
+      <ImageView fx:id="basicTower" fitHeight="164.0" fitWidth="109.0" layoutX="929.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/14955-illustration-of-a-cartoon-castle-tower-with-flag-pv.png" />
+            <Image url="@Images/basicTower.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="darkTower" fitHeight="81.0" fitWidth="57.0" layoutX="927.0" layoutY="317.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="darkTower" fitHeight="137.0" fitWidth="112.0" layoutX="954.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/Old_Guard_Tower_c_0000.jpgf4eb07e1-243e-47ad-9f51-6ba433b10b0aOriginal.jpg" />
+            <Image url="@Images/darkTower.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="fireTower" fitHeight="57.0" fitWidth="57.0" layoutX="1046.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="fireTower" fitHeight="112.0" fitWidth="156.0" layoutX="1048.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/images%20(1).jpg" />
+            <Image url="@Images/fireTower.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="lightTower" fitHeight="67.0" fitWidth="39.0" layoutX="1050.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="lightTower" fitHeight="142.0" fitWidth="123.0" layoutX="1050.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/bell_tower.gif" />
+            <Image url="@Images/lightTower.png" />
          </image>
       </ImageView>
       <ScrollPane fx:id="scrollPane" layoutX="9.0" layoutY="7.0" prefHeight="635.0" prefWidth="878.0">
@@ -46,5 +46,10 @@
                   <RowConstraints />
                </rowConstraints></GridPane>
          </content></ScrollPane>
+      <ImageView fx:id="treeTower" fitHeight="143.0" fitWidth="123.0" layoutX="986.0" layoutY="492.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/treeTower.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
