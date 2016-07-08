@@ -48,20 +48,18 @@ public class Game {
     }
 
     private MilitaryType getTypeForLevel(){
-        switch (level){
-            case 1:
-                return MilitaryType.BASIC;
-            case 2:
-                return MilitaryType.FIRE;
-            case 3:
-                return MilitaryType.TREE;
-            case 4:
-                return MilitaryType.LIGHT;
-            case 5:
-                return MilitaryType.DARK;
-            default:
-                return MilitaryType.BASIC;
-        }
+        if (level <= 10)
+            return MilitaryType.BASIC;
+        else if ( 10 < level && level <= 15)
+            return MilitaryType.FIRE;
+        else if ( 15 < level && level <= 20)
+            return MilitaryType.TREE;
+        else if ( 20 < level && level <= 25)
+            return MilitaryType.LIGHT;
+        else if ( 25 < level )
+            return MilitaryType.DARK;
+        else
+            return MilitaryType.BASIC;
     }
 
     Timer timerForMovingEnemiesAndMakingTowersAttack;
@@ -85,8 +83,10 @@ public class Game {
         timerForMovingEnemiesAndMakingTowersAttack.schedule(new TimerTask() {
             @Override
             public void run() {
-                while(enemies.contains(null)){
-                    enemies.remove(null);
+                synchronized (enemies){
+                    while(enemies.contains(null)){
+                        enemies.remove(null);
+                    }
                 }
                 doAttacksAndMoves();
             }
@@ -160,24 +160,6 @@ public class Game {
         player.balance -= tower.getType().initialPrice()/2;
         tower.upgrade();
     }
-
-    /**
-     * Combines two towers
-     * @param baseTower that something is going to be combined with this.
-     * @param combinedTower that is going to be put on the baseTower.
-     * @throws Exception if towers can't be combined.
-     */
-    private void combineTowers(Tower baseTower, Tower combinedTower) throws Exception{
-        if (baseTower == null || combinedTower == null)
-            return;
-        if (baseTower.getType() == combinedTower.getType()){
-
-        }
-        if (!baseTower.canCombine(combinedTower))
-            throw new InvalidCombinationException();
-        baseTower.combine(combinedTower);
-    }
-
 
     private synchronized void doAttacksAndMoves(){
         for (int i = 0; i < towers.size(); i++) {
@@ -260,8 +242,6 @@ public class Game {
                 for (Path p:gameMap.paths) {
                     try {
                         Enemy e = (Enemy) c.newInstance(gameMap, p);
-                        if (e == null)
-                            System.out.println("Here");
                         enemies.add(e);
                     } catch (Exception e) {
 //                        e.printStackTrace();
