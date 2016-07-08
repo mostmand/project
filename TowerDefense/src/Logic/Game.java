@@ -25,13 +25,16 @@ public class Game {
     private User player;
     public Map gameMap;
 
+    public int getPlayerBalance(){
+        return player.balance;
+    }
+
     public static GameTime gameTime = new GameTime();
 
     /**
      * Consists of a timer that does all the stuff
      * that needs to be done every period.
      */
-
     Timer thisTimer;
     public void startGame(){
         gameTime.startTime();
